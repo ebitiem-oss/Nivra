@@ -1,1 +1,30 @@
-
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 بازی‌خانه Nivra</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header><h1>🎮 بازی‌خانه</h1></header>
+    <main>
+        <p>خوش آمدی!</p>
+        <h2>یک بازی انتخاب کن</h2>
+        <div class="game-list">
+            <button onclick="openGame('بیلیارد')">بیلیارد (۲ یا ۴ نفره)</button>
+            <button onclick="openGame('شلم')">شلم (۲ یا ۴ نفره)</button>
+            <button onclick="openGame('حکم')">حکم (۲ یا ۴ نفره)</button>
+            <button onclick="openGame('اتللو')">اتللو (دو نفره)</button>
+            <button onclick="openGame('فوتبال')">فوتبال (۲ یا ۴ نفره)</button>
+        </div>
+        <div id="message"></div>
+    </main>
+    <footer>
+        <nav>
+            <a>خانه</a> <a>رقابت‌ها</a> <a>دوستان</a> <a>تنظیمات</a>
+        </nav>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>
