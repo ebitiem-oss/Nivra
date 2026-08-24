@@ -3,28 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nivra Game Hub</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Nivra - منوی بازی‌ها</title>
+    <style>
+        /* استایل تم تاریک (Dark Mode) مشابه پلاتو */
+        body { 
+            background-color: #121212; 
+            color: #ffffff; 
+            font-family: 'Tahoma', sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            text-align: center; 
+        }
+        h1 { margin-bottom: 30px; color: #007bff; }
+        
+        /* چیدمان دکمه‌ها */
+        .menu-container { 
+            display: grid; 
+            grid-template-columns: 1fr; /* در موبایل دکمه‌ها زیر هم باشند */
+            gap: 15px; 
+            max-width: 400px; 
+            margin: 0 auto; 
+        }
+
+        /* استایل دکمه‌های بازی */
+        .game-button {
+            background-color: #1e1e1e;
+            color: white;
+            border: 1px solid #333;
+            padding: 20px;
+            font-size: 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .game-button:active {
+            background-color: #333;
+            transform: scale(0.95); /* افکت فشردن دکمه در موبایل */
+        }
+
+        /* رنگ خاص برای دکمه منچ که تازه اضافه شده */
+        .new-game {
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
 
-    <header>
-        <h1>هاب بازی‌های Nivra</h1>
-    </header>
+    <h1>🎮 Nivra Games</h1>
 
-    <main class="game-list">
-        <button onclick="openGame('بیلیارد')">🎱 بیلیارد</button>
-        <button onclick="openGame('شلم')">🃏 شلم</button>
-        <button onclick="openGame('حکم')">🃏 حکم</button>
-        <button onclick="openGame('اتللو')">🧠 اتللو</button>
-        <button onclick="openGame('فوتبال')">⚽ فوتبال</button>
-        <button onclick="openGame('اونو')">🃏 اونو</button>
-    </main>
+    <div class="menu-container">
+        <!-- ترتیب دقیق شما -->
+        <a href="uno.html" class="game-button">🃏 بازی اوانو</a>
+        <a href="mench.html" class="game-button new-game">🎲 بازی منچ (جدید)</a>
+        <a href="hekmat.html" class="game-button">🃏 بازی حکم</a>
+        <a href="shalom.html" class="game-button">🎲 بازی شلم</a>
+        <a href="billiard.html" class="game-button">🎱 بازی بیلیارد</a>
+        <a href="football.html" class="game-button">⚽ بازی فوتبال</a>
+        <a href="atelo.html" class="game-button">🧩 بازی اتلو</a>
+    </div>
 
-    <footer>
-        <p>ساخته شده با ❤️ برای Nivra</p>
-    </footer>
-
-    <script src="app.js"></script>
 </body>
 </html>
+
