@@ -6,4 +6,3 @@ function openGame(gameName) {
 window.onload = function () {
     console.log("Nivra Game Hub is ready!");
 };
-add app.js
