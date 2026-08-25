@@ -1,1 +1,143 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivra </title>
+    <style>
+        body {
+            background-color: #121212; /* تم تیره */
+            color: white;
+            font-family: 'Arial', sans-serif; /* فونت استاندارد */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* حداقل ارتفاع صفحه */
+            margin: 0;
+            padding: 20px; /* کمی فاصله از لبه ها */
+            box-sizing: border-box;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 500px; /* حداکثر عرض برای نمایش بهتر */
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            font-size: 2.5em; /* اندازه بزرگتر برای عنوان */
+            font-weight: bold;
+            text-align: center;
+        }
+        .header .game-controller {
+            margin-left: 15px; /* فاصله بین عنوان و کنترلر */
+            font-size: 1.2em;
+        }
+        .game-card {
+            background-color: #282828; /* رنگ کارت ها */
+            border-radius: 15px; /* گوشه های گرد */
+            padding: 15px 25px;
+            margin-bottom: 15px; /* فاصله بین کارت ها */
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* چسباندن به چپ */
+            cursor: pointer; /* نشانه موس */
+            transition: all 0.2s ease-in-out; /* انیمیشن برای تغییرات */
+            border: 3px solid transparent; /* حاشیه شفاف برای انیمیشن */
+        }
+        .game-card:hover {
+            background-color: #383838; /* کمی روشن تر در حالت هاور */
+        }
+        .game-card:active {
+            transform: scale(0.96); /* کوچک کردن کارت */
+            border-color: #00aaff; /* نوار آبی دور کارت */
+        }
+        .game-icon {
+            font-size: 30px; /* اندازه ایموجی */
+            margin-left: 15px; /* فاصله ایموجی از متن */
+            width: 40px; /* ثابت نگه داشتن عرض آیکون */
+            display: flex;
+            justify-content: center;
+        }
+        .game-name {
+            font-size: 1.4em; /* اندازه فونت نام بازی */
+            font-weight: 500;
+        }
 
+        /* استایل اضافی برای نمایش بهتر آیکون ها */
+        .game-icon.uno img,
+        .game-icon.manch img,
+        .game-icon.hokm img,
+        .game-icon.kalam img,
+        .game-icon.billiard img,
+        .game-icon.football img,
+        .game-icon.otello img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            Nivra <span class="game-controller">🎮</span>
+        </div>
+
+        <!-- لیست بازی ها -->
+        <div class="game-card" onclick="openGame('اونو')">
+            <div class="game-icon uno">🎴</div>
+            <div class="game-name">بازی اوانو</div>
+        </div>
+
+        <div class="game-card" onclick="openGame('منچ')">
+            <div class="game-icon manch">🎲</div>
+            <div class="game-name">بازی منچ </div>
+        </div>
+
+        <div class="game-card" onclick="openGame('حکم')">
+            <div class="game-icon hokm">♠️</div>
+            <div class="game-name">بازی حکم</div>
+        </div>
+
+        <div class="game-card" onclick="openGame('شلم')">
+            <div class="game-icon kalam">🃏</div>
+            <div class="game-name">بازی شلم</div>
+        </div>
+
+        <div class="game-card" onclick="openGame('بیلیارد')">
+            <div class="game-icon billiard">🎱</div>
+            <div class="game-name">بازی بیلیارد</div>
+        </div>
+
+        <div class="game-card" onclick="openGame('فوتبال')">
+            <div class="game-icon football">⚽</div>
+            <div class="game-name">بازی فوتبال</div>
+        </div>
+
+        <div class="game-card" onclick="openGame('اتللو')">
+            <div class="game-icon otello">🧠</div>
+            <div class="game-name">بازی اتلو</div>
+        </div>
+    </div>
+
+    <script>
+        function openGame(gameName) {
+            console.log(`باز کردن بازی: ${gameName}`);
+            // اینجا می توانید منطق باز کردن هر بازی را اضافه کنید
+            // برای مثال، اگر بازی منچ را کلیک کردید، به صفحه منچ هدایت شوید:
+            if (gameName === 'منچ') {
+                // window.location.href = 'mench.html'; // مسیر صفحه بازی منچ
+            } else if (gameName === 'اونو') {
+                // window.location.href = 'uno.html'; // مسیر صفحه بازی اوانو
+            }
+            // ... سایر بازی ها
+        }
+    </script>
+</body>
+</html>
