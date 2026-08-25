@@ -1,25 +1,24 @@
 /**
  * Nivra Game Hub - Main Logic
- * Version: 1.0.0
+ * Version: 1.1.0
  */
 
-// این تابع مسئول باز کردن بازی‌هاست
+// تابع اصلی برای باز کردن بازی‌ها
 function openGame(gameName) {
     console.log(`[Nivra] Attempting to launch: ${gameName}`);
+    
+    // نمایش پیام به کاربر
     alert(`در حال آماده‌سازی بازی: ${gameName}\nلطفاً منتظر بمانید...`);
 }
 
-// این بخش زمانی اجرا می‌شود که صفحه کاملاً بارگذاری شود
+// اجرای کدها به محض بارگذاری صفحه
 document.addEventListener('DOMContentLoaded', () => {
-    // تغییر متن طبق درخواست شما
-    console.log("%cFirst Game Nivra 🚀", "color: #00ff00; font-weight: bold; font-size: 16px;");
+    // پیام مورد نظر شما در کنسول
+    console.log("%cFirst Game Nivra 🚀", "color: #00ff00; font-weight: bold; font-size: 18px;");
     
     initializeApp();
 });
 
-/**
- * تنظیمات اولیه پروژه
- */
 function initializeApp() {
-    console.log("Initializing system components...");
+    console.log("System components initialized...");
 }
