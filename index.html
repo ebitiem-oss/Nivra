@@ -3,69 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nivra - منوی بازی‌ها</title>
+    <title>Nivra Game Hub</title>
     <style>
-        /* استایل تم تاریک (Dark Mode) */
-        body { 
-            background-color: #121212; 
-            color: #ffffff; 
-            font-family: 'Tahoma', sans-serif; 
-            margin: 0; 
-            padding: 20px; 
-            text-align: center; 
-        }
-        
-        h1 { 
-            margin-bottom: 30px; 
-            color: #007bff; 
-            font-size: 2rem;
-        }
-        
-        /* چیدمان دکمه‌ها در حالت لیست */
-        .menu-container { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 15px; 
-            max-width: 400px; 
-            margin: 0 auto; 
+        /* تنظیمات کلی ظاهر */
+        body {
+            background-color: #121212; /* تم تاریک */
+            color: white;
+            font-family: Tahoma, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
         }
 
-        /* استایل اصلی تمام دکمه‌ها (یکسان برای همه) */
-        .game-button {
-            background-color: #1e1e1e; /* پس‌زمینه تیره برای دکمه */
-            color: #007bff;           /* متن آبی */
-            border: 2px solid #007bff; /* کادر آبی دور دکمه */
-            padding: 18px;
-            font-size: 18px;
+        h1 {
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        /* ظرف اصلی دکمه‌ها */
+        .games-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* استایل دکمه‌های بازی */
+        .game-card {
+            background-color: #1e1e1e; /* رنگ اصلی دکمه (تیره) */
+            border: 2px solid transparent; /* حاشیه در ابتدا نامرئی */
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease; /* برای نرم بودن تغییرات */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        /* استایل ایموجی داخل دکمه */
+        .game-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .game-name {
+            font-size: 16px;
             font-weight: bold;
-            border-radius: 12px;      /* لبه‌های گرد */
-            text-decoration: none;    /* حذف خط زیر لینک */
-            display: block;
-            transition: all 0.3s ease; /* انیمیشن نرم برای تغییر حالت */
         }
 
-        /* افکت هنگام نگه داشتن موس یا لمس در موبایل */
-        .game-button:hover, .game-button:active {
-            background-color: #007bff; /* وقتی لمس شود، کل دکمه آبی می‌شود */
-            color: #ffffff;           /* متن سفید می‌شود */
-            transform: scale(0.98);  /* کمی کوچک می‌شود تا حس کلیک بدهد */
+        /* --- استایل حالت کلیک شده (Active) --- */
+        .game-card:active {
+            transform: scale(0.92); /* کوچک شدن دکمه */
+            background-color: #151515; /* تیره شدن بیشتر مرکز دکمه */
+            border-color: #007bff; /* آبی شدن فقط دور دکمه */
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* درخشش آبی دور دکمه */
+        }
+
+        /* افکت نگه داشتن موس روی دکمه (برای دسکتاپ) */
+        .game-card:hover {
+            background-color: #252525;
         }
     </style>
 </head>
 <body>
 
-    <h1>🎮 Nivra </h1>
+    <h1>Nivra Game Hub</h1>
 
-    <div class="menu-container">
-        <!-- تمام دکمه‌ها اکنون از یک کلاس واحد و استایل یکسان استفاده می‌کنند -->
-        <a href="uno.html" class="game-button"> بازی اونو 🎴</a>
-        <a href="mench.html" class="game-button"> بازی منچ 🎲</a>
-        <a href="hekmat.html" class="game-button"> بازی حکم ♠️</a>
-        <a href="shalom.html" class="game-button"> بازی شلم 🃏</a>
-        <a href="billiard.html" class="game-button"> بازی بیلیارد 🎱</a>
-        <a href="football.html" class="game-button"> بازی فوتبال ⚽️</a>
-        <a href="atelo.html" class="game-button"> بازی اتللو 🧠</a>
+    <div class="games-container">
+        <!-- لیست بازی‌های شما -->
+        <div class="game-card" onclick="openGame('اونو')">
+            <span class="game-icon">🎴</span>
+            <span class="game-name">اونو</span>
+        </div>
+
+        <div class="game-card" onclick="openGame('منچ')">
+            <span class="game-icon">🎲</span>
+            <span class="game-name">منچ</span>
+        </div>
+
+        <div class="game-card" onclick="openGame('حکم')">
+            <span class="game-icon">♠️</span>
+            <span class="game-name">حکم</span>
+        </div>
+
+        <div class="game-card" onclick="openGame('شلم')">
+            <span class="game-icon">🃏</span>
+            <span class="game-name">شلم</span>
+        </div>
+
+        <div class="game-card" onclick="openGame('بیلیارد')">
+            <span class="game-icon">🎱</span>
+            <span class="game-name">بیلیارد</span>
+        </div>
+
+        <div class="game-card" onclick="openGame('اتللو')">
+            <span class="game-icon">🧠</span>
+            <span class="game-name">اتللو</span>
+        </div>
+
+        <div class="game-card" onclick="openGame('فوتبال')">
+            <span class="game-icon">⚽️</span>
+            <span class="game-name">فوتبال</span>
+        </div>
     </div>
 
+    <!-- اتصال به فایل جاوااسکریپت -->
+    <script src="app.js"></script>
 </body>
 </html>
