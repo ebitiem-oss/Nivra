@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nivra - منوی بازی‌ها</title>
     <style>
-        /* استایل تم تاریک (Dark Mode) مشابه پلاتو */
+        /* استایل تم تاریک (Dark Mode) */
         body { 
             background-color: #121212; 
             color: #ffffff; 
@@ -14,39 +14,41 @@
             padding: 20px; 
             text-align: center; 
         }
-        h1 { margin-bottom: 30px; color: #007bff; }
         
-        /* چیدمان دکمه‌ها */
+        h1 { 
+            margin-bottom: 30px; 
+            color: #007bff; 
+            font-size: 2rem;
+        }
+        
+        /* چیدمان دکمه‌ها در حالت لیست */
         .menu-container { 
             display: grid; 
-            grid-template-columns: 1fr; /* در موبایل دکمه‌ها زیر هم باشند */
+            grid-template-columns: 1fr; 
             gap: 15px; 
             max-width: 400px; 
             margin: 0 auto; 
         }
 
-        /* استایل دکمه‌های بازی */
+        /* استایل اصلی تمام دکمه‌ها (یکسان برای همه) */
         .game-button {
-            background-color: #1e1e1e;
-            color: white;
-            border: 1px solid #333;
-            padding: 20px;
+            background-color: #1e1e1e; /* پس‌زمینه تیره برای دکمه */
+            color: #007bff;           /* متن آبی */
+            border: 2px solid #007bff; /* کادر آبی دور دکمه */
+            padding: 18px;
             font-size: 18px;
-            border-radius: 12px;
-            text-decoration: none;
+            font-weight: bold;
+            border-radius: 12px;      /* لبه‌های گرد */
+            text-decoration: none;    /* حذف خط زیر لینک */
             display: block;
-            transition: background 0.3s, transform 0.2s;
+            transition: all 0.3s ease; /* انیمیشن نرم برای تغییر حالت */
         }
 
-        .game-button:active {
-            background-color: #333;
-            transform: scale(0.95); /* افکت فشردن دکمه در موبایل */
-        }
-
-        /* رنگ خاص برای دکمه منچ که تازه اضافه شده */
-        .new-game {
-            border: 1px solid #007bff;
-            color: #007bff;
+        /* افکت هنگام نگه داشتن موس یا لمس در موبایل */
+        .game-button:hover, .game-button:active {
+            background-color: #007bff; /* وقتی لمس شود، کل دکمه آبی می‌شود */
+            color: #ffffff;           /* متن سفید می‌شود */
+            transform: scale(0.98);  /* کمی کوچک می‌شود تا حس کلیک بدهد */
         }
     </style>
 </head>
@@ -55,16 +57,15 @@
     <h1>🎮 Nivra </h1>
 
     <div class="menu-container">
-        <!-- ترتیب دقیق شما -->
-        <a href="uno.html" class="game-button new-game"> بازی اوانو 🎴</a>
-        <a href="mench.html" class="game-button new-game"> بازی منچ 🎲</a>
-        <a href="hekmat.html" class="game-button new-game"> بازی حکم ♠️</a>
-        <a href="shalom.html" class="game-button new-game"> بازی شلم 🃏</a>
-        <a href="billiard.html" class="game-button new-game"> بازی بیلیارد 🎱</a>
-        <a href="football.html" class="game-button new-game"> بازی فوتبال ⚽️</a>
-        <a href="atelo.html" class="game-button new-game">بازی اتللو 🧠 </a>
+        <!-- تمام دکمه‌ها اکنون از یک کلاس واحد و استایل یکسان استفاده می‌کنند -->
+        <a href="uno.html" class="game-button"> بازی اونو 🎴</a>
+        <a href="mench.html" class="game-button"> بازی منچ 🎲</a>
+        <a href="hekmat.html" class="game-button"> بازی حکم ♠️</a>
+        <a href="shalom.html" class="game-button"> بازی شلم 🃏</a>
+        <a href="billiard.html" class="game-button"> بازی بیلیارد 🎱</a>
+        <a href="football.html" class="game-button"> بازی فوتبال ⚽️</a>
+        <a href="atelo.html" class="game-button"> بازی اتللو 🧠</a>
     </div>
 
 </body>
 </html>
-
