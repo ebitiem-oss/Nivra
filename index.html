@@ -3,57 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منوی بازی‌های Nivra</title>
+    <title>Nivra - Main Menu</title>
     <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --primary-blue: #2980b9;
+            --text-gray: #888;
+            --accent-color: #27ae60;
+        }
+
         body {
-            background-color: #121212; /* رنگ پس‌زمینه اصلی مشکی */
-            color: white;
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background-color: var(--bg-color);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            overflow-x: hidden;
         }
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 30px;
-            color: #3498db; /* رنگ آبی برای عنوان */
+        /* --- هدر (Header) --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .game-button {
+        .logo-section { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: bold; }
+        
+        .profile-section { display: flex; align-items: center; gap: 10px; }
+
+        /* دایره درصد پیشرفت */
+        .progress-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent-color) 70%, #333 0%); /* مثال: 70 درصد */
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 90%;
-            max-width: 400px;
-            height: 65px; /* ارتفاع دقیق */
-            background-color: #1e1e1e; /* رنگ دکمه */
-            border: 1px solid #333; /* حاشیه باریک دکمه */
-            border-radius: 8px; /* گوشه‌های کم‌گرد */
+            position: relative;
+        }
+        .progress-circle::after {
+            content: "";
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background: var(--card-bg);
+            border-radius: 50%;
+        }
+        .progress-text {
+            position: relative;
+            z-index: 1;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .user-id { font-size: 12px; color: var(--text-gray); }
+
+        /* --- منوی سه نقطه (Dropdown) --- */
+        .menu-container { position: relative; }
+        .dots-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 35px;
+            background: var(--card-bg);
+            min-width: 180px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            z-index: 1001;
+            border: 1px solid #333;
+        }
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 15px;
             color: white;
             text-decoration: none;
-            font-size: 18px;
-            margin-bottom: 12px;
-            transition: 0.2s;
+            font-size: 14px;
+            border-bottom: 1px solid #2a2a2a;
         }
-        
+        .dropdown-menu a:hover { background: #2c3e50; }
+        .show { display: block; }
+
+        /* --- منوی بازی‌ها (Games Grid) --- */
+        .games-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            height: 100px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s;
+            border: 1px solid #333;
+        }
+        .game-card:active { transform: scale(0.95); }
+        .game-icon { font-size: 30px; margin-bottom: 5px; }
+
+        /* --- منوی کشویی برای بازی‌های منعطف --- */
+        .dropdown-game {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            bottom: 110%; /* باز شدن به سمت بالا برای موبایل */
+            left: 0;
+            right: 0;
+            background: #2c3e50;
+            border-radius: 10px;
+            z-index: 5;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #3e5871;
+        }
+        .dropdown-game:focus-within .dropdown-content {
+            display: block;
+        }
+
+        /* کلاس مخصوص دکمه منچ */
+        .mench { border: 2px solid var(--primary-blue); }
+
+    </style>
 </head>
 <body>
 
-    <h1>🎮 Nivra </h1>
+    <!-- هدر -->
+    <header class="header">
+        <div class="logo-section">
+            <span>🎮 Nivra</span>
+        </div>
 
-    <a href="uno.html" class="game-button">بازی اونو 🎴</a>
-    
-    <!-- دکمه منچ با کلاس مخصوص -->
-    <a href="mench.html" class="game-button mench">بازی منچ 🎲</a>
-    
-    <a href="hokm.html" class="game-button">بازی حکم ♠️</a>
-    <a href="shelem.html" class="game-button">بازی شلم 🃏</a>
-    <a href="billiard.html" class="game-button">بازی بیلیارد 🎱</a>
-    <a href="football.html" class="game-button">بازی فوتبال ⚽</a>
-    <a href="athello.html" class="game-button">بازی اتلو 🧠</a>
+        <div class="profile-section">
+            <div class="user-id">ID: 78452</div>
+            <div class="progress-circle">
+                <span class="progress-text">70%</span>
+            </div>
+            
+            <!-- منوی سه نقطه -->
+            <div class="menu-container">
+                <button class="dots-btn" onclick="toggleMenu()">⋮</button>
+                <div id="myDropdown" class="dropdown-menu">
+                    <a href="#">👥 لیست دوستان</a>
+                    <a href="#">💎 خرید اشتراک</a>
+                    <a href="#" onclick="alert('برای تغییر نام نیاز به اشتراک ویژه دارید!')">⚙️ تنظیمات</a>
+                    <a href="#">🎧 پشتیبانی</a>
+                    <a href="#">📜 شرایط استفاده</a>
+                    <a href="#" style="color: #e74c3c;">🚪 خروج از حساب</a>
+                </div>
+            </div>
+        </div>
+    </header>
 
+    <!-- لیست بازی‌ها -->
+    <div class="games-container">
+        
+        <!-- بازی‌های ثابت (بدون منوی کشویی) -->
+        <a href="lobby.html?game=mench" class="game-card mench">
+            <span class="game-icon">🎲</span>
+            <span>منچ</span>
+        </a>
+
+        <a href="lobby.html?game=otello" class="game-card">
+            <span class="game-icon">🧠</span>
+            <span>اتللو</span>
+        </a>
+
+        <a href="lobby.html?game=uno" class="game-card">
+            <span class="game-icon">🎴</span>
+            <span>اونو</span>
+        </a>
+
+        <!-- بازی‌های کشویی (دارای انتخاب تعداد نفر) -->
+        <div class="dropdown-game">
+            <div class="game-card" tabindex="0">
+                <span class="game-icon">⚽</span>
+                <span>فوتبال</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=football&p=2">۲ نفره</a>
+                <a href="lobby.html?game=football&p=4">۴ نفره</a>
+            </div>
+        </div>
+
+        <div class="dropdown-game">
+            <div class="game-card" tabindex="0">
+                <span class="game-icon">🎱</span>
+                <span>بیلیارد</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=billiard&p=2">۲ نفره</a>
+                <a href="lobby.html?game=billiard&p=4">۴ نفره</a>
+            </div>
+        </div>
+
+        <div class="dropdown-game">
+            <div class="game-card" tabindex="0">
+                <span class="game-icon">♠️</span>
+                <span>حکم</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=hokm&p=2">۲ نفره</a>
+                <a href="lobby.html?game=hokm&p=4">۴ نفره</a>
+            </div>
+        </div>
+
+        <div class="dropdown-game">
+            <div class="game-card" tabindex="0">
+                <span class="game-icon">🃏</span>
+                <span>شلم</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=shalam&p=2">۲ نفره</a>
+                <a href="lobby.html?game=shalam&p=4">۴ نفره</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // تابع باز و بسته کردن منوی سه نقطه
+        function toggleMenu() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // بستن منو اگر کاربر جای دیگری کلیک کرد
+        window.onclick = function(event) {
+            if (!event.target.matches('.dots-btn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>
