@@ -2,245 +2,461 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nivra - Main Menu</title>
+    <title>Nivra - Game</title>
     <style>
-        :root {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --primary-blue: #2980b9;
-            --text-gray: #888;
-            --accent-color: #27ae60;
-            --logo-color: #00d2ff;
-        }
-
         body {
-            background-color: var(--bg-color);
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle, #1a0b2e 0%, #050505 100%);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
-        }
-
-        /* --- هدر (Header) --- */
-        .nivra-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background-color: var(--card-bg);
-            border-bottom: 1px solid #333;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex: 1;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #333;
-            border: 2px solid var(--primary-blue);
-            object-fit: cover;
-            cursor: pointer;
-        }
-
-        .user-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: white;
-        }
-
-        .header-center {
-            flex: 1;
             text-align: center;
-            font-size: 20px;
-            font-weight: 900;
-            color: var(--logo-color);
         }
-
-        .header-right {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
+        .container {
+            border: 2px solid #0ff;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
+            background: rgba(0, 0, 0, 0.5);
         }
-
-        .dots-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 26px;
+        /* انیمیشن درخشش متن */
+        h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+            to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+        }
+        /* انیمیشن ضربان دکمه */
+        button {
+            background: transparent;
+            border: 2px solid #f0f;
+            color: #f0f;
+            padding: 15px 30px;
+            font-size: 1.2rem;
             cursor: pointer;
-            padding: 0 5px;
+            border-radius: 5px;
+            transition: 0.3s;
+            animation: pulse 2s infinite;
         }
-
-        /* --- منوی سه‌نقطه --- */
-        .menu-container { position: relative; }
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 45px;
-            background: var(--card-bg);
-            min-width: 170px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            z-index: 1001;
-            border: 1px solid #333;
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0); }
         }
-        .dropdown-menu a {
-            display: block;
-            padding: 12px 15px;
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            border-bottom: 1px solid #2a2a2a;
+        button:hover {
+            background: #f0f;
+            color: #fff;
         }
-        .show { display: block; }
-
-        /* --- لیست بازی‌ها --- */
-        .games-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            padding: 20px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .game-card {
-            background-color: var(--card-bg);
-            height: 70px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            text-decoration: none;
-            color: white;
-            border: 1px solid #333;
-            cursor: pointer;
-        }
-        .dropdown-game { position: relative; }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            bottom: 75px;
-            left: 0;
-            right: 0;
-            background: #2c3e50;
-            border-radius: 10px;
-            z-index: 10;
-        }
-        .dropdown-content a {
-            display: block;
-            padding: 10px;
-            text-align: center;
-            color: white;
-            text-decoration: none;
-        }
-        .dropdown-game:focus-within .dropdown-content { display: block; }
     </style>
 </head>
 <body>
-
-    <header class="nivra-header">
-        <div class="header-left">
-            <!-- ورودی فایل مخفی برای انتخاب عکس -->
-            <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="previewAvatar(event)">
-            <label for="avatarInput">
-                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Nivra" alt="Avatar" id="userAvatar" class="user-avatar">
-            </label>
-            <span class="user-name">User#1234</span>
-        </div>
-        
-        <div class="header-center">🎮 Nivra</div>
-
-        <div class="header-right">
-            <button class="dots-btn" onclick="toggleMenu()">⋮</button>
-            <div id="dropdownMenu" class="dropdown-menu">
-                <a href="#">👥 لیست دوستان</a>
-                <a href="#">💎 خرید اشتراک</a>
-                <a href="#">⚙️ تنظیمات</a>
-                <a href="#">📜 شرایط استفاده</a>
-                <a href="#" style="color: #e74c3c;">🚪 خروج</a>
-            </div>
-        </div>
-    </header>
-
-    <main class="games-container">
-        <a href="lobby.html?game=uno" class="game-card"><span>اونو</span> 🎴</a>
-        <a href="lobby.html?game=mench" class="game-card"><span>منچ</span> 🎲</a>
-        
-        <div class="dropdown-game" tabindex="0">
-            <div class="game-card"><span>حکم</span> ♠️</div>
-            <div class="dropdown-content">
-                <a href="lobby.html?game=hokm&p=2">۲ نفره</a>
-                <a href="lobby.html?game=hokm&p=4">۴ نفره</a>
-            </div>
-        </div>
-
-        <div class="dropdown-game" tabindex="0">
-            <div class="game-card"><span>شلم</span> 🃏</div>
-            <div class="dropdown-content">
-                <a href="lobby.html?game=shalam&p=2">۲ نفره</a>
-                <a href="lobby.html?game=shalam&p=4">۴ نفره</a>
-            </div>
-        </div>
-
-        <div class="dropdown-game" tabindex="0">
-            <div class="game-card"><span>بیلیارد</span> 🎱</div>
-            <div class="dropdown-content">
-                <a href="lobby.html?game=billiard&p=2">۲ نفره</a>
-                <a href="lobby.html?game=billiard&p=4">۴ نفره</a>
-            </div>
-        </div>
-
-        <div class="dropdown-game" tabindex="0">
-            <div class="game-card"><span>فوتبال</span> ⚽️</div>
-            <div class="dropdown-content">
-                <a href="lobby.html?game=football&p=2">۲ نفره</a>
-                <a href="lobby.html?game=football&p=4">۴ نفره</a>
-            </div>
-        </div>
-
-        <a href="lobby.html?game=otello" class="game-card"><span>اتللو</span> 🧠</a>
-    </main>
-
-    <script>
-        // تغییر عکس پروفایل
-        function previewAvatar(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('userAvatar').src = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
+    <div class="container">
+        <h1>🎮Nivra</h1>
+        <p>به دنیای بازی نیورا خوش آمدید</p>
+        <br>
+        <button onclick="alert('بازی به زودی شروع می‌شود!')">شروع بازی</button>
+    </div>
+</body>
+</html><!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>🎮Nivra</title>
+    <style>
+        body {
+            background: radial-gradient(circle, #1a0b2e 0%, #050505 100%);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
         }
-
-        // منوی سه‌نقطه
-        function toggleMenu() {
-            document.getElementById("dropdownMenu").classList.toggle("show");
+        .container {
+            border: 2px solid #0ff;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
+            background: rgba(0, 0, 0, 0.5);
         }
-
-        // بستن منو با کلیک بیرون
-        window.onclick = function(event) {
-            if (!event.target.matches('.dots-btn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-menu");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    dropdowns[i].classList.remove('show');
-                }
-            }
+        /* انیمیشن درخشش متن */
+        h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            animation: glow 1.5s ease-in-out infinite alternate;
         }
-    </script>
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+            to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+        }
+        /* انیمیشن ضربان دکمه */
+        button {
+            background: transparent;
+            border: 2px solid #f0f;
+            color: #f0f;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0); }
+        }
+        button:hover {
+            background: #f0f;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮Nivra</h1>
+        <p>به دنیای بازی نیورا خوش آمدید</p>
+        <br>
+        <button onclick="alert('بازی به زودی شروع می‌شود!')">شروع بازی</button>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>🎮Nivra</title>
+    <style>
+        body {
+            background: radial-gradient(circle, #1a0b2e 0%, #050505 100%);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            border: 2px solid #0ff;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        /* انیمیشن درخشش متن */
+        h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+            to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+        }
+        /* انیمیشن ضربان دکمه */
+        button {
+            background: transparent;
+            border: 2px solid #f0f;
+            color: #f0f;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0); }
+        }
+        button:hover {
+            background: #f0f;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮Nivra</h1>
+        <p>به دنیای بازی نیورا خوش آمدید</p>
+        <br>
+        <button onclick="alert('بازی به زودی شروع می‌شود!')">شروع بازی</button>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Nivra - Game</title>
+    <style>
+        body {
+            background: radial-gradient(circle, #1a0b2e 0%, #050505 100%);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            border: 2px solid #0ff;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        /* انیمیشن درخشش متن */
+        h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+            to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+        }
+        /* انیمیشن ضربان دکمه */
+        button {
+            background: transparent;
+            border: 2px solid #f0f;
+            color: #f0f;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0); }
+        }
+        button:hover {
+            background: #f0f;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nivra</h1>
+        <p>به دنیای بازی نیورا خوش آمدید</p>
+        <br>
+        <button onclick="alert('بازی به زودی شروع می‌شود!')">شروع بازی</button>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Nivra - Game</title>
+    <style>
+        body {
+            background: radial-gradient(circle, #1a0b2e 0%, #050505 100%);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            border: 2px solid #0ff;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        /* انیمیشن درخشش متن */
+        h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+            to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+        }
+        /* انیمیشن ضربان دکمه */
+        button {
+            background: transparent;
+            border: 2px solid #f0f;
+            color: #f0f;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0); }
+        }
+        button:hover {
+            background: #f0f;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nivra</h1>
+        <p>به دنیای بازی نیورا خوش آمدید</p>
+        <br>
+        <button onclick="alert('بازی به زودی شروع می‌شود!')">شروع بازی</button>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Nivra - Game</title>
+    <style>
+        body {
+            background: radial-gradient(circle, #1a0b2e 0%, #050505 100%);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            border: 2px solid #0ff;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        /* انیمیشن درخشش متن */
+        h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+            to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+        }
+        /* انیمیشن ضربان دکمه */
+        button {
+            background: transparent;
+            border: 2px solid #f0f;
+            color: #f0f;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0); }
+        }
+        button:hover {
+            background: #f0f;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nivra</h1>
+        <p>به دنیای بازی نیورا خوش آمدید</p>
+        <br>
+        <button onclick="alert('بازی به زودی شروع می‌شود!')">شروع بازی</button>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Nivra - Game</title>
+    <style>
+        body {
+            background: radial-gradient(circle, #1a0b2e 0%, #050505 100%);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            border: 2px solid #0ff;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        /* انیمیشن درخشش متن */
+        h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+            to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+        }
+        /* انیمیشن ضربان دکمه */
+        button {
+            background: transparent;
+            border: 2px solid #f0f;
+            color: #f0f;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 255, 0); }
+        }
+        button:hover {
+            background: #f0f;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nivra</h1>
+        <p>به دنیای بازی نیورا خوش آمدید</p>
+        <br>
+        <button onclick="alert('بازی به زودی شروع می‌شود!')">شروع بازی</button>
+    </div>
 </body>
 </html>
 
