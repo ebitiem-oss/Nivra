@@ -8,8 +8,10 @@
         :root {
             --bg-color: #121212;
             --card-bg: #1e1e1e;
+            --primary-blue: #2980b9;
             --text-gray: #888;
             --accent-color: #27ae60;
+            --logo-color: #00d2ff;
         }
 
         body {
@@ -20,112 +22,224 @@
             padding: 0;
         }
 
-        /* --- هدر --- */
-        .header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px; background-color: var(--card-bg);
-            border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 1000;
+        /* --- هدر (Header) --- */
+        .nivra-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        .logo-section { font-size: 20px; font-weight: bold; }
-        .profile-section { display: flex; align-items: center; gap: 10px; }
-        .progress-circle {
-            width: 40px; height: 40px; border-radius: 50%;
-            background: conic-gradient(var(--accent-color) 70%, #333 0%);
-            display: flex; align-items: center; justify-content: center; position: relative;
-        }
-        .progress-circle::after {
-            content: ""; position: absolute; width: 32px; height: 32px;
-            background: var(--card-bg); border-radius: 50%;
-        }
-        .progress-text { position: relative; z-index: 1; font-size: 10px; font-weight: bold; }
-        .user-id { font-size: 12px; color: var(--text-gray); }
 
-        /* --- منو اصلی --- */
-        .menu-container { position: relative; }
-        .dots-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; padding: 0 5px; }
-        .dropdown-menu {
-            display: none; position: absolute; left: 0; top: 35px; background: var(--card-bg);
-            min-width: 180px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            z-index: 1001; border: 1px solid #333;
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
         }
-        .dropdown-menu a { display: block; padding: 12px 15px; color: white; text-decoration: none; font-size: 14px; border-bottom: 1px solid #2a2a2a; }
-        .dropdown-menu a:hover { background: #2c3e50; }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            border: 2px solid var(--primary-blue);
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .header-center {
+            flex: 1;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--logo-color);
+        }
+
+        .header-right {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .dots-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 26px;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+
+        /* --- منوی سه‌نقطه --- */
+        .menu-container { position: relative; }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 45px;
+            background: var(--card-bg);
+            min-width: 170px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            z-index: 1001;
+            border: 1px solid #333;
+        }
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #2a2a2a;
+        }
         .show { display: block; }
 
         /* --- لیست بازی‌ها --- */
-        .games-container { display: flex; flex-direction: column; gap: 15px; padding: 20px; max-width: 500px; margin: 0 auto; }
-        
+        .games-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
         .game-card {
-            background-color: var(--card-bg); 
-            height: 80px; 
-            border-radius: 15px;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 12px;
-            text-decoration: none; 
-            color: white; 
-            font-size: 18px; 
-            font-weight: 500;
-            border: none; /* کادر حذف شد */
-            cursor: pointer; 
-            transition: 0.2s;
+            background-color: var(--card-bg);
+            height: 70px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            text-decoration: none;
+            color: white;
+            border: 1px solid #333;
+            cursor: pointer;
         }
-        .game-card:hover { background-color: #262626; }
-        .game-icon { font-size: 26px; }
-
-        /* --- منوی کشویی داخل بازی‌ها --- */
-        .dropdown-game { position: relative; outline: none; }
+        .dropdown-game { position: relative; }
         .dropdown-content {
-            display: none; position: absolute; bottom: calc(100% + 5px); left: 0; right: 0;
-            background: #2c3e50; border-radius: 10px; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            display: none;
+            position: absolute;
+            bottom: 75px;
+            left: 0;
+            right: 0;
+            background: #2c3e50;
+            border-radius: 10px;
+            z-index: 10;
         }
-        .dropdown-content a { display: block; padding: 12px; text-align: center; color: white; text-decoration: none; font-size: 14px; border-bottom: 1px solid #3e5871; }
-        .dropdown-content a:hover { background: #34495e; }
+        .dropdown-content a {
+            display: block;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+        }
         .dropdown-game:focus-within .dropdown-content { display: block; }
     </style>
 </head>
 <body>
 
-    <header class="header">
-        <div class="logo-section">🎲 Nivra</div>
-        <div class="profile-section">
-            <div class="progress-circle"><span class="progress-text">70%</span></div>
-            <span class="user-id">User#1234</span>
-            <div class="menu-container">
-                <button class="dots-btn" onclick="toggleMenu()">⋮</button>
-                <div id="dropdownMenu" class="dropdown-menu">
-                    <a href="#">👥 لیست دوستان</a>
-                    <a href="#">💎 خرید اشتراک</a>
-                    <a href="#">⚙️ تنظیمات</a>
-                    <a href="#" style="color: #e74c3c;">🚪 خروج</a>
-                </div>
+    <header class="nivra-header">
+        <div class="header-left">
+            <!-- ورودی فایل مخفی برای انتخاب عکس -->
+            <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="previewAvatar(event)">
+            <label for="avatarInput">
+                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Nivra" alt="Avatar" id="userAvatar" class="user-avatar">
+            </label>
+            <span class="user-name">User#1234</span>
+        </div>
+        
+        <div class="header-center">🎮 Nivra</div>
+
+        <div class="header-right">
+            <button class="dots-btn" onclick="toggleMenu()">⋮</button>
+            <div id="dropdownMenu" class="dropdown-menu">
+                <a href="#">👥 لیست دوستان</a>
+                <a href="#">💎 خرید اشتراک</a>
+                <a href="#">⚙️ تنظیمات</a>
+                <a href="#">📜 شرایط استفاده</a>
+                <a href="#" style="color: #e74c3c;">🚪 خروج</a>
             </div>
         </div>
     </header>
 
     <main class="games-container">
-        <a href="?game=uno" class="game-card"><span>اونو</span><span class="game-icon">🎴</span></a>
-        <a href="?game=mench" class="game-card"><span>منچ</span><span class="game-icon">🎲</span></a>
+        <a href="lobby.html?game=uno" class="game-card"><span>اونو</span> 🎴</a>
+        <a href="lobby.html?game=mench" class="game-card"><span>منچ</span> 🎲</a>
+        
         <div class="dropdown-game" tabindex="0">
-            <div class="game-card"><span>حکم</span><span class="game-icon">♠️</span></div>
-            <div class="dropdown-content"><a href="?game=hokm&p=2">۲ نفره</a><a href="?game=hokm&p=4">۴ نفره</a></div>
+            <div class="game-card"><span>حکم</span> ♠️</div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=hokm&p=2">۲ نفره</a>
+                <a href="lobby.html?game=hokm&p=4">۴ نفره</a>
+            </div>
         </div>
+
         <div class="dropdown-game" tabindex="0">
-            <div class="game-card"><span>شلم</span><span class="game-icon">🃏</span></div>
-            <div class="dropdown-content"><a href="?game=shalam&p=2">۲ نفره</a><a href="?game=shalam&p=4">۴ نفره</a></div>
+            <div class="game-card"><span>شلم</span> 🃏</div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=shalam&p=2">۲ نفره</a>
+                <a href="lobby.html?game=shalam&p=4">۴ نفره</a>
+            </div>
         </div>
+
         <div class="dropdown-game" tabindex="0">
-            <div class="game-card"><span>بیلیارد</span><span class="game-icon">🎱</span></div>
-            <div class="dropdown-content"><a href="?game=billiard&p=2">۲ نفره</a><a href="?game=billiard&p=4">۴ نفره</a></div>
+            <div class="game-card"><span>بیلیارد</span> 🎱</div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=billiard&p=2">۲ نفره</a>
+                <a href="lobby.html?game=billiard&p=4">۴ نفره</a>
+            </div>
         </div>
-        <a href="?game=football" class="game-card"><span>فوتبال</span><span class="game-icon">⚽️</span></a>
-        <a href="?game=othello" class="game-card"><span>اتللو</span><span class="game-icon">🧠</span></a>
+
+        <div class="dropdown-game" tabindex="0">
+            <div class="game-card"><span>فوتبال</span> ⚽️</div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=football&p=2">۲ نفره</a>
+                <a href="lobby.html?game=football&p=4">۴ نفره</a>
+            </div>
+        </div>
+
+        <a href="lobby.html?game=otello" class="game-card"><span>اتللو</span> 🧠</a>
     </main>
 
     <script>
-        function toggleMenu() { document.getElementById("dropdownMenu").classList.toggle("show"); }
-        window.onclick = function(e) { if (!e.target.matches('.dots-btn')) document.getElementById("dropdownMenu").classList.remove("show"); }
+        // تغییر عکس پروفایل
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('userAvatar').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // منوی سه‌نقطه
+        function toggleMenu() {
+            document.getElementById("dropdownMenu").classList.toggle("show");
+        }
+
+        // بستن منو با کلیک بیرون
+        window.onclick = function(event) {
+            if (!event.target.matches('.dots-btn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    dropdowns[i].classList.remove('show');
+                }
+            }
+        }
     </script>
 </body>
 </html>
