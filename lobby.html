@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivra - Lobby</title>
+    <style>
+        :root { --bg-color: #121212; --card-bg: #1e1e1e; --primary-blue: #2980b9; --text-gray: #888; --accent-color: #27ae60; --danger-color: #e74c3c; --warning-color: #f39c12; }
+        body { background-color: var(--bg-color); color: #ffffff; font-family: sans-serif; margin: 0; padding: 0; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background-color: var(--card-bg); border-bottom: 1px solid #333; }
+        .back-btn { background: none; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 14px; }
+        .container { max-width: 500px; margin: 0 auto; padding: 20px; }
+        .section { background-color: var(--card-bg); border-radius: 15px; padding: 20px; border: 1px solid #333; margin-bottom: 20px; }
+        .btn { display: block; width: 100%; background-color: var(--primary-blue); color: white; border: none; padding: 12px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; margin-bottom: 10px; }
+        .btn-success { background-color: var(--accent-color); }
+        .btn-danger { background-color: var(--danger-color); }
+        .room-item { display: flex; justify-content: space-between; align-items: center; background: #262626; padding: 12px 15px; border-radius: 10px; border: 1px solid #333; margin-bottom: 10px; }
+        .join-btn { background-color: var(--accent-color); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+        .player-slot { display: flex; align-items: center; justify-content: space-between; background: #262626; padding: 10px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #333; }
+        .voice-controls { display: flex; gap: 10px; margin-top: 15px; }
+        .ptt-btn { flex: 2; background-color: #34495e; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; }
+        .ptt-btn.active { background-color: var(--danger-color); }
+        .mic-toggle { flex: 1; background-color: #2c3e50; border: 1px solid #444; color: white; border-radius: 10px; cursor: pointer; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn">⬅️ خروج</a>
+        <div id="lobby-title-text">لابی بازی</div>
+        <div></div>
+    </header>
+    <div class="container">
+        <div id="lobby-browser-view">
+            <button class="btn btn-success" onclick="createNewRoom()">➕ ایجاد اتاق جدید</button>
+            <div class="section">
+                <div class="room-list" id="rooms-list-container"></div>
+            </div>
+        </div>
+        <div id="room-active-view" class="hidden">
+            <div class="section">
+                <div id="room-display-name" style="margin-bottom:10px; font-weight:bold;"></div>
+                <div id="players-list-container"></div>
+                <div class="voice-controls">
+                    <button id="mic-toggle-btn" class="mic-toggle" onclick="toggleHostMic()">🎙️</button>
+                    <button id="ptt-btn" class="ptt-btn" onmousedown="startPTT()" onmouseup="stopPTT()">🎤 PTT</button>
+                </div>
+            </div>
+            <button id="ready-btn" class="btn" onclick="toggleReadyStatus()">🙋 اعلام آمادگی</button>
+            <button id="start-game-btn" class="btn btn-success hidden" onclick="startGame()">🚀 شروع بازی</button>
+            <button class="btn btn-danger" onclick="leaveCurrentRoom()">🚪 خروج</button>
+        </div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameType = urlParams.get('game') || 'uno';
+        document.getElementById('lobby-title-text').innerText = `لابی ${gameType}`;
+        let isHost = false, isReady = false;
+        
+        function createNewRoom() {
+            isHost = true;
+            document.getElementById('lobby-browser-view').classList.add('hidden');
+            document.getElementById('room-active-view').classList.remove('hidden');
+            document.getElementById('room-display-name').innerText = "اتاق شما";
+            document.getElementById('ready-btn').classList.add('hidden');
+            document.getElementById('start-game-btn').classList.remove('hidden');
+        }
+        function startPTT() { document.getElementById('ptt-btn').classList.add('active'); }
+        function stopPTT() { document.getElementById('ptt-btn').classList.remove('active'); }
+        function leaveCurrentRoom() { location.reload(); }
+        function startGame() { alert("بازی شروع شد!"); }
+        function toggleReadyStatus() { isReady = !isReady; document.getElementById('ready-btn').innerText = isReady ? "لغو آمادگی" : "اعلام آمادگی"; }
+        function toggleHostMic() { alert("میکروفون تغییر وضعیت داد"); }
+    </script>
+</body>
+</html>
