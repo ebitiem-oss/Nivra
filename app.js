@@ -55,3 +55,15 @@ body {
     font-size: 1.2rem;
     color: #00d2ff;
 }
+<script>
+    // تابع ورود به اتاق با دریافت نام اتاق و نام بازی
+    function enterRoom(roomName, gameName) {
+        document.getElementById('lobby-view').style.display = 'none';
+        document.getElementById('room-view').style.display = 'flex';
+        
+        // این خط می‌تواند نام بازی را در هدر اتاق نمایش دهد (اختیاری)
+        document.querySelector('.header span').innerText = roomName + " (" + gameName + ")";
+    }
+
+    // ... بقیه کدهای قبلی
+</script>
