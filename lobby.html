@@ -3,243 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nivra - لابی بازی</title>
+    <title>Nivra - Minimal Lobby</title>
     <style>
         :root { 
-            --bg-color: #121212; 
-            --card-bg: #1e1e1e; 
-            --primary-blue: #2980b9; 
-            --text-gray: #888; 
-            --accent-color: #27ae60; 
-            --danger-color: #e74c3c; 
-            --warning-color: #f39c12; 
+            --bg-color: #0f0f0f; /* سیاه عمیق */
+            --card-bg: #1a1a1a; /* خاکستری بسیار تیره */
+            --accent: #ffffff; /* سفید برای کنتراست بالا */
+            --text-main: #e0e0e0;
+            --text-dim: #666;
+            --status-ready: #00ff88;
+            --status-waiting: #ffaa00;
         }
-        body { background-color: var(--bg-color); color: #ffffff; font-family: Tahoma, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background-color: var(--card-bg); border-bottom: 1px solid #333; }
-        .back-btn { background: none; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 14px; }
-        .container { max-width: 500px; margin: 0 auto; padding: 20px; }
-        .section { background-color: var(--card-bg); border-radius: 15px; padding: 20px; border: 1px solid #333; margin-bottom: 20px; }
-        .section-title { font-size: 14px; color: var(--text-gray); margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 8px; }
+
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh;
+        }
+
+        /* Header بسیار ساده */
+        .header { 
+            padding: 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-bottom: 1px solid #222;
+        }
+        .back-btn { color: var(--text-dim); text-decoration: none; font-size: 14px; }
+
+        .container { flex: 1; padding: 20px; max-width: 500px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+
+        /* استایل مینیمال اتاق‌ها */
+        .room-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        .room-card:active { transform: scale(0.98); }
         
-        /* دکمه شناور برای ساخت اتاق (فقط در حالت لیست نمایش داده می‌شود) */
-        .fab-create-room {
+        .room-info-simple { display: flex; flex-direction: column; }
+        .room-title { font-weight: 500; font-size: 15px; }
+        .room-meta-simple { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+
+        .join-minimal { 
+            background: var(--accent); 
+            color: black; 
+            border: none; 
+            padding: 6px 16px; 
+            border-radius: 20px; 
+            font-size: 13px; 
+            font-weight: bold; 
+            cursor: pointer;
+        }
+
+        /* دکمه شناور بسیار ساده */
+        .fab-minimal {
             position: fixed;
             bottom: 30px;
             left: 30px;
-            width: 65px;
-            height: 65px;
+            width: 56px;
+            height: 56px;
+            background: var(--accent);
+            color: black;
             border-radius: 50%;
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            font-size: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            cursor: pointer;
-            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s;
+            font-size: 24px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            border: none;
+            cursor: pointer;
         }
-        .fab-create-room:active { transform: scale(0.9); }
 
-        .btn { display: block; width: 100%; background-color: var(--primary-blue); color: white; border: none; padding: 12px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; margin-bottom: 10px; transition: 0.2s; }
-        .btn-success { background-color: var(--accent-color); }
-        .btn-danger { background-color: var(--danger-color); }
-        
-        .room-item { display: flex; justify-content: space-between; align-items: center; background: #262626; padding: 12px 15px; border-radius: 10px; border: 1px solid #333; margin-bottom: 10px; }
-        .room-info { display: flex; flex-direction: column; gap: 4px; }
-        .room-name { font-weight: bold; font-size: 15px; }
-        .room-meta { font-size: 12px; color: var(--text-gray); }
-        .join-btn { background-color: var(--primary-blue); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        
-        .player-slot { display: flex; align-items: center; justify-content: space-between; background: #262626; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #333; }
-        .player-info { display: flex; align-items: center; gap: 10px; }
-        .player-avatar { width: 35px; height: 35px; border-radius: 50%; background: #444; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-        .player-name { font-weight: bold; font-size: 14px; }
-        .player-status { font-size: 12px; padding: 4px 8px; border-radius: 6px; }
-        .status-ready { background-color: rgba(39, 174, 96, 0.2); color: var(--accent-color); }
-        .status-waiting { background-color: rgba(243, 156, 18, 0.2); color: var(--warning-color); }
-        .status-host { background-color: rgba(41, 128, 185, 0.2); color: var(--primary-blue); }
+        /* بخش داخل اتاق - بازیکنان بسیار ساده */
+        .player-row {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #222;
+        }
+        .simple-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-left: 12px;
+            border: 1px solid #444;
+        }
+        .player-name-simple { font-size: 15px; flex: 1; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .dot-ready { background: var(--status-ready); box-shadow: 0 0 8px var(--status-ready); }
+        .dot-waiting { background: var(--status-waiting); }
 
-        .voice-controls { display: flex; gap: 10px; margin-top: 15px; margin-bottom: 15px; }
-        .ptt-btn { flex: 2; background-color: #34495e; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; }
-        .ptt-btn.active { background-color: var(--danger-color); }
-        .mic-toggle { flex: 1; background-color: #2c3e50; border: 1px solid #444; color: white; border-radius: 10px; cursor: pointer; font-size: 18px; }
-        
+        /* دکمه‌های عملیاتی پایین صفحه */
+        .action-bar {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn-action {
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn-primary { background: var(--accent); color: black; }
+        .btn-outline { background: transparent; color: var(--text-dim); border: 1px solid #333; }
+
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
+
     <header class="header">
-        <a href="index.html" class="back-btn">⬅️ خروج</a>
-        <div id="lobby-title-text" style="font-weight: bold; font-size: 18px;">لابی</div>
-        <div style="width: 50px;"></div>
+        <a href="#" class="back-btn">← بازگشت</a>
+        <span id="title" style="font-size: 16px; letter-spacing: 1px;">LOBBY</span>
+        <div style="width: 40px;"></div>
     </header>
 
     <div class="container">
-        <!-- بخش ۱: لیست اتاق‌ها (فقط وقتی در لابی هستیم نمایش داده می‌شود) -->
-        <div id="lobby-browser-view">
-            <div class="section">
-                <div class="section-title">اتاق‌های در حال انتظار</div>
-                <div class="room-list" id="rooms-list-container"></div>
+        <!-- نمای لابی -->
+        <div id="lobby-view">
+            <div id="rooms-container">
+                <!-- اتاق‌ها اینجا رندر می‌شوند -->
             </div>
-            <!-- دکمه ساخت اتاق (فقط اینجا است) -->
-            <button class="fab-create-room" onclick="createNewRoom()">+</button>
+            <button class="fab-minimal" onclick="createRoom()">+</button>
         </div>
 
-        <!-- بخش ۲: نمای داخل اتاق (وقتی وارد اتاق شدیم نمایش داده می‌شود) -->
-        <div id="room-active-view" class="hidden">
-            <div class="section">
-                <div id="room-display-name" style="margin-bottom:15px; font-weight:bold; font-size: 18px; color: var(--primary-blue);">اتاق</div>
-                <div class="section-title">بازیکنان</div>
-                <div id="players-list-container"></div>
-
-                <div class="voice-controls">
-                    <button id="mic-toggle-btn" class="mic-toggle" onclick="toggleMic()">🎙️</button>
-                    <button id="ptt-btn" class="ptt-btn" onmousedown="startPTT()" onmouseup="stopPTT()" ontouchstart="startPTT()" ontouchend="stopPTT()">🎤 PTT</button>
-                </div>
+        <!-- نمای داخل اتاق -->
+        <div id="room-view" class="hidden">
+            <div style="margin-bottom: 30px;">
+                <div id="room-name-display" style="font-size: 20px; font-weight: bold;">Room Name</div>
+                <div style="color: var(--text-dim); font-size: 12px;">Players in session</div>
             </div>
-            
-            <button id="ready-btn" class="btn" onclick="toggleReadyStatus()">🙋 اعلام آمادگی</button>
-            <button id="start-game-btn" class="btn btn-success hidden" onclick="startGame()">🚀 شروع بازی</button>
-            <button class="btn btn-danger" onclick="leaveCurrentRoom()">🚪 خروج از اتاق</button>
+
+            <div id="players-container">
+                <!-- بازیکنان اینجا رندر می‌شوند -->
+            </div>
+
+            <div class="action-bar">
+                <button id="ready-btn" class="btn-action btn-primary" onclick="toggleReady()">آماده شدن</button>
+                <button id="start-btn" class="btn-action btn-primary hidden" onclick="alert('Start!')">شروع بازی</button>
+                <button class="btn-action btn-outline" onclick="exitRoom()">خروج</button>
+            </div>
         </div>
     </div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const gameType = urlParams.get('game') || 'uno';
-        const maxPlayers = parseInt(urlParams.get('p')) || 4;
-        
-        const gameNames = {'uno': 'اونو', 'mench': 'منچ', 'hokm': 'حکم', 'shelem': 'شلم', 'billiard': 'بیلیارد', 'football': 'فوتبال دستی', 'othello': 'اتللو'};
-        document.getElementById('lobby-title-text').innerText = `لابی ${gameNames[gameType] || gameType}`;
-
-        // دیتای فرضی برای اتاق‌های دیگران (بدون بات)
+        // دیتای ساده (بدون نام کاربری‌های پیچیده یا پروفایل)
         const mockRooms = [
-            { id: 101, name: "اتاق حرفه‌ای‌ها 🔥", host: "کامیار", playersCount: 2, maxPlayers: maxPlayers },
-            { id: 102, name: "بازی دوستانه", host: "سارا_۹۹", playersCount: 1, maxPlayers: maxPlayers }
+            { id: 1, name: "Room 1", count: "2/4" },
+            { id: 2, name: "Room 2", count: "1/4" }
         ];
 
-        let currentRoom = null, isHost = false, isReady = false, isMicOn = false, players = [];
+        const mockPlayers = [
+            { name: "You", avatar: "👤", ready: true, isHost: true },
+            { name: "Player 1", avatar: "👤", ready: false, isHost: false }
+        ];
 
-        // نمایش لیست اتاق‌ها
-        function renderRoomList() {
-            const container = document.getElementById('rooms-list-container');
-            container.innerHTML = '';
-            mockRooms.forEach(room => {
-                const roomEl = document.createElement('div');
-                roomEl.className = 'room-item';
-                roomEl.innerHTML = `
-                    <div class="room-info">
-                        <span class="room-name">${room.name}</span>
-                        <span class="room-meta">سازنده: ${room.host} | ظرفیت: ${room.playersCount}/${room.maxPlayers}</span>
+        function renderLobby() {
+            const container = document.getElementById('rooms-container');
+            container.innerHTML = mockRooms.map(r => `
+                <div class="room-card">
+                    <div class="room-info-simple">
+                        <span class="room-title">${r.name}</span>
+                        <span class="room-meta-simple">${r.count} players</span>
                     </div>
-                    <button class="join-btn" onclick="joinRoom(${room.id})">ورود</button>`;
-                container.appendChild(roomEl);
-            });
-        }
-
-        // ساخت اتاق جدید (حذف دکمه و لیست اتاق‌ها)
-        function createNewRoom() {
-            isHost = true; 
-            isReady = true; 
-            currentRoom = { name: "اتاق جدید من", maxPlayers: maxPlayers };
-            // فقط شما و بازیکنانی که بعداً می‌آیند (در اینجا فقط خودتان هستید)
-            players = [{ name: "شما (میزبان)", avatar: "👑", isHost: true, isReady: true }];
-            showActiveRoomView();
-        }
-
-        // پیوستن به اتاق موجود (حذف دکمه و لیست اتاق‌ها)
-        function joinRoom(roomId) {
-            isHost = false; 
-            isReady = false;
-            const targetRoom = mockRooms.find(r => r.id === roomId);
-            currentRoom = { name: targetRoom.name, maxPlayers: targetRoom.maxPlayers };
-            
-            // شبیه‌سازی بازیکنان واقعی (بدون بات)
-            players = [];
-            players.push({ name: targetRoom.host, avatar: "👤", isHost: true, isReady: true });
-            // اگر اتاق پر نبود، فقط خود کاربر اضافه شود
-            if (targetRoom.playersCount < targetRoom.maxPlayers) {
-                players.push({ name: "شما", avatar: "👤", isHost: false, isReady: false });
-            }
-            
-            showActiveRoomView();
-        }
-
-        // مدیریت جابجایی بین نمای لابی و نمای اتاق
-        function showActiveRoomView() {
-            // پنهان کردن لابی و دکمه ساخت اتاق
-            document.getElementById('lobby-browser-view').classList.add('hidden');
-            document.querySelector('.fab-create-room').classList.add('hidden');
-            
-            // نمایش نمای اتاق
-            document.getElementById('room-active-view').classList.remove('hidden');
-            document.getElementById('room-display-name').innerText = currentRoom.name;
-            
-            // تنظیم دکمه‌های میزبان/بازیکن
-            if (isHost) {
-                document.getElementById('ready-btn').classList.add('hidden');
-                document.getElementById('start-game-btn').classList.remove('hidden');
-            } else {
-                document.getElementById('ready-btn').classList.remove('hidden');
-                document.getElementById('start-game-btn').classList.add('hidden');
-            }
-            renderPlayers();
+                    <button class="join-minimal" onclick="joinRoom()">Join</button>
+                </div>
+            `).join('');
         }
 
         function renderPlayers() {
-            const container = document.getElementById('players-list-container');
-            container.innerHTML = '';
-            players.forEach(p => {
-                const playerEl = document.createElement('div');
-                playerEl.className = 'player-slot';
-                let statusText = p.isHost ? "میزبان" : (p.isReady ? "آماده" : "در انتظار");
-                let statusClass = p.isHost ? "status-host" : (p.isReady ? "status-ready" : "status-waiting");
-                
-                playerEl.innerHTML = `
-                    <div class="player-info">
-                        <div class="player-avatar">${p.avatar}</div>
-                        <span class="player-name">${p.name}</span>
-                    </div>
-                    <span class="player-status ${statusClass}">${statusText}</span>`;
-                container.appendChild(playerEl);
-            });
+            const container = document.getElementById('players-container');
+            container.innerHTML = mockPlayers.map(p => `
+                <div class="player-row">
+                    <div class="simple-avatar">${p.avatar}</div>
+                    <div class="player-name-simple">${p.name}</div>
+                    <div class="status-dot ${p.ready ? 'dot-ready' : 'dot-waiting'}"></div>
+                </div>
+            `).join('');
         }
 
-        function leaveCurrentRoom() {
-            // بازگشت به لابی
-            document.getElementById('room-active-view').classList.add('hidden');
-            document.getElementById('lobby-browser-view').classList.remove('hidden');
-            document.querySelector('.fab-create-room').classList.remove('hidden');
-            renderRoomList();
-        }
-
-        function toggleReadyStatus() {
-            isReady = !isReady;
-            // پیدا کردن بازیکن "شما" در لیست و تغییر وضعیتش
-            const me = players.find(p => p.name === "شما" || p.name === "شما (میزبان)");
-            if (me) me.isReady = isReady;
-            
+        function createRoom() {
+            document.getElementById('lobby-view').classList.add('hidden');
+            document.getElementById('room-view').classList.remove('hidden');
+            document.getElementById('room-name-display').innerText = "New Room";
+            document.getElementById('start-btn').classList.remove('hidden'); // چون میزبان هستیم
+            document.getElementById('ready-btn').classList.add('hidden');
             renderPlayers();
-            document.getElementById('ready-btn').innerText = isReady ? "🙋 لغو آمادگی" : "🙋 اعلام آمادگی";
-            document.getElementById('ready-btn').style.backgroundColor = isReady ? 'var(--warning-color)' : 'var(--primary-blue)';
         }
 
-        function startPTT() { document.getElementById('ptt-btn').classList.add('active'); }
-        function stopPTT() { document.getElementById('ptt-btn').classList.remove('active'); }
-        function toggleMic() { 
-            isMicOn = !isMicOn; 
-            const micBtn = document.getElementById('mic-toggle-btn');
-            micBtn.innerText = isMicOn ? "🔊" : "🎙️";
-            micBtn.style.backgroundColor = isMicOn ? 'var(--accent-color)' : '#2c3e50';
+        function joinRoom() {
+            document.getElementById('lobby-view').classList.add('hidden');
+            document.getElementById('room-view').classList.remove('hidden');
+            document.getElementById('room-name-display').innerText = "Room 1";
+            renderPlayers();
         }
-        function startGame() { alert("بازی شروع شد!"); }
 
-        // شروع اولیه
-        renderRoomList();
+        function exitRoom() {
+            document.getElementById('room-view').classList.add('hidden');
+            document.getElementById('lobby-view').classList.remove('hidden');
+            renderLobby();
+        }
+
+        function toggleReady() {
+            mockPlayers[1].ready = !mockPlayers[1].ready;
+            renderPlayers();
+        }
+
+        // شروع
+        renderLobby();
     </script>
 </body>
 </html>
-
