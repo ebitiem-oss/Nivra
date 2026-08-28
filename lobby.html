@@ -39,15 +39,36 @@
 <body>
 
     <!-- لابی -->
-    <div id="lobby-view">
-        <h2 style="padding: 10px;">اتاق‌های در دسترس</h2>
-        <div class="room-row" onclick="enterRoom('اتاقِ دوستان')">
-            <div class="avatar"></div>
-            <div class="room-info">
-                <h3>اتاقِ دوستان</h3>
-                <p>بازی: مافیا | ۳ نفر داخل</p>
-            </div>
+<div id="lobby-view">
+    <h2 style="padding: 10px;">اتاق‌های در دسترس</h2>
+
+    <!-- اتاق ۱: اونو -->
+    <div class="room-row" onclick="enterRoom('اتاقِ دوستان', 'اونو')">
+        <div class="avatar"></div>
+        <div class="room-info">
+            <h3>اتاقِ دوستان</h3>
+            <p>بازی: اونو | ۲ نفر داخل</p>
         </div>
+    </div>
+
+    <!-- اتاق ۲: منچ -->
+    <div class="room-row" onclick="enterRoom('اتاقِ مهدی', 'منچ')">
+        <div class="avatar"></div>
+        <div class="room-info">
+            <h3>اتاقِ مهدی</h3>
+            <p>بازی: منچ | ۴ نفر داخل</p>
+        </div>
+    </div>
+
+    <!-- اتاق ۳: دوز -->
+    <div class="room-row" onclick="enterRoom('اتاقِ شماره ۳', 'دوز')">
+        <div class="avatar"></div>
+        <div class="room-info">
+            <h3>اتاقِ شماره ۳</h3>
+            <p>بازی: دوز | ۱ نفر داخل</p>
+        </div>
+    </div>
+    
         <!-- دکمه ساخت اتاق -->
         <div class="fab" onclick="createRoom()">+</div>
     </div>
