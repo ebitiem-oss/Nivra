@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivra - Main Menu</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --primary-blue: #2980b9;
+            --text-gray: #888;
+            --accent-color: #27ae60;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- هدر (Header) --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* دایره درصد پیشرفت */
+        .progress-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent-color) 70%, #333 0%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .progress-circle::after {
+            content: "";
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background: var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .progress-text {
+            position: relative;
+            z-index: 1;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .user-id {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* --- منوی سه نقطه (Dropdown) --- */
+        .menu-container {
+            position: relative;
+        }
+
+        .dots-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 35px;
+            background: var(--card-bg);
+            min-width: 180px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            z-index: 1001;
+            border: 1px solid #333;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: #2c3e50;
+        }
+
+        .show {
+            display: block;
+        }
+
+        /* --- لیست بازی‌ها (یک ستونی - زیر هم) --- */
+        .games-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background-color: var(--card-bg);
+            height: 80px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+            transition: transform 0.2s, background-color 0.2s;
+            border: 1px solid #333;
+            cursor: pointer;
+            position: relative;
+        }
+
+      .game-card:hover {
+            background-color: #262626;
+        }
+
+        .game-card:active {
+            transform: scale(0.98);
+        }
+
+        .game-icon {
+            font-size: 26px;
+        }
+
+        /* منوی کشویی انتخاب نفرات */
+        .dropdown-game {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            background: #2c3e50;
+            border-radius: 10px;
+            z-index: 10;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #3e5871;
+            font-size: 14px;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background: #34495e;
+        }
+
+        .dropdown-game:focus-within .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- هدر -->
+    <header class="header">
+        <div class="logo-section">
+            <span>🎲 Nivra</span>
+        </div>
+        
+        <div class="profile-section">
+            <div class="progress-circle">
+                <span class="progress-text">70%</span>
+            </div>
+            <span class="user-id">User#1234</span>
+            <div class="menu-container">
+                <button class="dots-btn" onclick="toggleMenu()">⋮</button>
+                <div id="dropdownMenu" class="dropdown-menu">
+                    <a href="#">👥 لیست دوستان</a>
+                    <a href="#">💎 خرید اشتراک</a>
+                    <a href="#" onclick="alert('برای تغییر نام نیاز به اشتراک ویژه دارید!')">⚙️ تنظیمات</a>
+                    <a href="#">🎧 پشتیبانی</a>
+                    <a href="#">📜 شرایط استفاده</a>
+                    <a href="#" style="color: #e74c3c;">🚪 خروج از حساب</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- لیست بازی‌ها زیر هم -->
+    <main class="games-container">
+
+        <!-- ۱. اونو -->
+        <a href="lobby.html?game=uno" class="game-card">
+            <span>اونو</span>
+            <span class="game-icon">🎴</span>
+        </a>
+
+        <!-- ۲. منچ -->
+        <a href="lobby.html?game=mench" class="game-card">
+            <span>منچ</span>
+            <span class="game-icon">🎲</span>
+        </a>
+
+        <!-- ۳. حکم -->
+        <div class="dropdown-game" tabindex="0">
+            <div class="game-card">
+                <span>حکم</span>
+                <span class="game-icon">♠️</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=hokm&p=2">۲ نفره</a>
+                <a href="lobby.html?game=hokm&p=4">۴ نفره</a>
+            </div>
+        </div>
+
+        <!-- ۴. شلم -->
+        <div class="dropdown-game" tabindex="0">
+            <div class="game-card">
+                <span>شلم</span>
+                <span class="game-icon">🃏</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=shalam&p=2">۲ نفره</a>
+                <a href="lobby.html?game=shalam&p=4">۴ نفره</a>
+            </div>
+        </div>
+
+        <!-- ۵. بیلیارد -->
+        <div class="dropdown-game" tabindex="0">
+            <div class="game-card">
+                <span>بیلیارد</span>
+                <span class="game-icon">🎱</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=billiard&p=2">۲ نفره</a>
+                <a href="lobby.html?game=billiard&p=4">۴ نفره</a>
+            </div>
+        </div>
+    
+      <!-- ۶. فوتبال -->
+        <div class="dropdown-game" tabindex="0">
+            <div class="game-card">
+                <span>فوتبال</span>
+                <span class="game-icon">⚽️</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="lobby.html?game=football&p=2">۲ نفره</a>
+                <a href="lobby.html?game=football&p=4">۴ نفره</a>
+            </div>
+        </div>
+
+        <!-- ۷. اتللو -->
+        <a href="lobby.html?game=otello" class="game-card">
+            <span>اتللو</span>
+            <span class="game-icon">🧠</span>
+        </a>
+
+    </main>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("dropdownMenu").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dots-btn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
