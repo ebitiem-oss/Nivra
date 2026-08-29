@@ -93,3 +93,19 @@ function stopTalk() {
 function createRoom() {
     alert("اتاق جدید ساخته شد!");
 }
+const micBtn = document.getElementById('mic-btn');
+
+// مدیریت رویدادهای لمسی و کلیکی
+function startTalk() {
+    micBtn.classList.add('active-mic');
+    // اینجا در آینده کد مربوط به اتصال به WebSocket/Audio API اضافه می‌شود
+}
+
+function stopTalk() {
+    micBtn.classList.remove('active-mic');
+}
+
+// افزودن Event Listener برای جلوگیری از باگ‌های احتمالی
+micBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startTalk(); });
+micBtn.addEventListener('touchend', stopTalk);
+}
