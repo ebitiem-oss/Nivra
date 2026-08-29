@@ -67,3 +67,29 @@ body {
 
     // ... بقیه کدهای قبلی
 </script>
+}
+
+function enterRoom(name, game) {
+    document.getElementById('lobby-view').style.display = 'none';
+    document.getElementById('room-view').style.display = 'flex';
+    document.getElementById('room-title').innerText = name + " (" + game + ")";
+}
+
+function exitRoom() {
+    document.getElementById('lobby-view').style.display = 'block';
+    document.getElementById('room-view').style.display = 'none';
+}
+
+function startTalk() {
+    document.getElementById('mic-btn').classList.add('active-mic');
+    console.log("صدا باز شد...");
+}
+
+function stopTalk() {
+    document.getElementById('mic-btn').classList.remove('active-mic');
+    console.log("صدا قطع شد.");
+}
+
+function createRoom() {
+    alert("اتاق جدید ساخته شد!");
+}
