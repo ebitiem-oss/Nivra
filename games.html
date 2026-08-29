@@ -163,3 +163,55 @@
     </script>
 </body>
 </html>
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Nivra - پلتفرم بازی</title>
+</head>
+<body>
+
+    <!-- لابی -->
+    <div id="lobby-view">
+        <h2 style="padding: 10px; color: white;">اتاق‌های در دسترس</h2>
+        <div class="room-row" onclick="enterRoom('اتاقِ دوستان', 'اونو')">
+            <div class="avatar"></div>
+            <div class="room-info">
+                <h3>اتاقِ دوستان</h3>
+                <p>بازی: اونو | ۲ نفر داخل</p>
+            </div>
+        </div>
+        <div class="fab" onclick="createRoom()">+</div>
+    </div>
+
+    <!-- اتاق بازی -->
+    <div id="room-view" style="display: none;">
+        <header>
+            <button onclick="exitRoom()">← خروج</button>
+            <span id="room-title">اتاق بازی</span>
+            <button>⚙️</button>
+        </header>
+
+        <div class="game-board">
+            <div class="player-slot">
+                <div class="avatar"></div>
+                <span>شما</span>
+                <div class="mic-status">🎙️</div>
+            </div>
+            <div class="player-slot inactive">
+                <div class="avatar"></div>
+                <span>خالی</span>
+            </div>
+        </div>
+
+        <footer>
+            <input type="text" placeholder="پیام بده...">
+            <button id="mic-btn" onmousedown="startTalk()" onmouseup="stopTalk()" ontouchstart="startTalk()" ontouchend="stopTalk()">🎙️</button>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
