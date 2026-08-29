@@ -2,68 +2,193 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Nivra - Game</title>
-    <style>
-        body {
-            background: radial-gradient(circle, #1a0b2e 0%, #050505 100%);
-            color: #fff;
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        .container {
-            border: 2px solid #0ff;
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        /* افکت چشمک‌زن برای Nivra */
-        h1 {
-            font-size: 3rem;
-            color: #fff;
-            text-shadow: 0 0 10px #f0f, 0 0 20px #f0f;
-            animation: blink 1.5s infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        /* استایل دکمه که اکنون لینک شده است */
-        .btn-link {
-            text-decoration: none;
-        }
-        button {
-            background: transparent;
-            border: 2px solid #f0f;
-            color: #f0f;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-        button:hover {
-            background: #f0f;
-            color: #fff;
-            box-shadow: 0 0 20px #f0f;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>نیورا | Nivra</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Nivra</h1>
-        <p>به دنیای بازی نیورا خوش آمدید</p>
+
+    <div id="app">
         
-        <!-- این بخش تغییر کرده است -->
-        <a href="games.html" class="btn-link">
-            <button>شروع بازی ها</button>
-        </a>
-        
+        <!-- هدر اصلی صفحه ورودی (دقیقاً بر اساس چیدمان سوبرا) -->
+        <header class="top-header">
+            <!-- پروفایل کاربر و نام کاربری سمت راست -->
+            <div class="user-profile-widget" onclick="switchTab('profile')">
+                <div class="avatar-ring">
+                    <div class="avatar-img"></div>
+                </div>
+                <div class="user-details">
+                    <span class="user-name">سام (Essi)</span>
+                    <span class="user-level-badge">⭐ سطح ۵</span>
+                </div>
+            </div>
+
+            <!-- سه نقطه و منوی کشویی سمت چپ -->
+            <div class="header-actions">
+                <button class="icon-menu-btn" onclick="toggleOptionsMenu(event)">⋮</button>
+                <div id="options-dropdown" class="options-dropdown hidden">
+                    <div class="dropdown-item" onclick="openSettings()">⚙️ تنظیمات صدا و بازی</div>
+                    <div class="dropdown-item" onclick="openRules()">📜 راهنما و قوانین</div>
+                    <div class="dropdown-item" onclick="switchTab('profile')">👤 مشاهده پروفایل</div>
+                    <hr class="dropdown-divider">
+                    <div class="dropdown-item danger" onclick="logout()">🚪 خروج از حساب</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- محتوای اصلی -->
+        <main id="viewport" class="viewport">
+            
+            <!-- صفحه ورودی اصلی: لیست و گرید بازی‌ها -->
+            <section id="tab-home" class="tab-content active">
+                <div class="banner-vip">
+                    <div class="vip-text">
+                        <strong>اشتراک ویژه نیورا</strong>
+                        <span>دسترسی به چت صوتی و بازی‌های نامحدود</span>
+                    </div>
+                    <button class="btn-vip">ارتقا</button>
+                </div>
+
+                <h3 class="section-title">انتخاب بازی</h3>
+
+                <div class="games-grid">
+                    <!-- بازی اونو -->
+                    <div class="game-card uno-theme" onclick="openLobby('uno', 'اونو')">
+                        <div class="game-icon">🃏</div>
+                        <span class="game-title">اونو</span>
+                        <span class="game-tag">۲ تا ۱۰ نفره</span>
+                    </div>
+
+                    <!-- بازی اتللو -->
+                    <div class="game-card othello-theme" onclick="openLobby('othello', 'اتللو')">
+                        <div class="game-icon">⚪⚫</div>
+                        <span class="game-title">اتللو</span>
+                        <span class="game-tag">۲ نفره • فکری</span>
+                    </div>
+
+                    <!-- بازی منچ -->
+                    <div class="game-card mench-theme" onclick="openLobby('mench', 'منچ')">
+                        <div class="game-icon">🎲</div>
+                        <span class="game-title">منچ</span>
+                        <span class="game-tag">۲ تا ۴ نفره</span>
+                    </div>
+
+                    <!-- بازی حکم -->
+                    <div class="game-card hokm-theme" onclick="openLobby('hokm', 'حکم')">
+                        <div class="game-icon">♠️</div>
+                        <span class="game-title">حکم</span>
+                        <span class="game-tag">۴ نفره</span>
+                    </div>
+
+                    <!-- بازی فوتبال دستی / بیلیارد -->
+                    <div class="game-card football-theme" onclick="openLobby('football', 'فوتبال')">
+                        <div class="game-icon">⚽</div>
+                        <span class="game-title">فوتبال</span>
+                        <span class="game-tag">۲ نفره هیجانی</span>
+                    </div>
+
+                    <!-- بازی مافیا -->
+                    <div class="game-card mafia-theme" onclick="openLobby('mafia', 'مافیا')">
+                        <div class="game-icon">🎭</div>
+                        <span class="game-title">مافیا</span>
+                        <span class="game-tag">گروهی صوتی</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- صفحه لابی و لیست اتاق‌ها -->
+            <section id="tab-lobby" class="tab-content">
+                <div class="lobby-top-bar">
+                    <button class="back-btn" onclick="switchTab('home')">➡️ بازگشت</button>
+                    <h3 id="current-game-title">لیست اتاق‌ها</h3>
+                    <button class="btn-primary-small" onclick="openCreateRoomModal()">+ ساخت اتاق</button>
+                </div>
+
+                <div class="room-list" id="room-list-container">
+                    <div class="room-card">
+                        <div class="room-info">
+                            <span class="game-badge uno">اونو</span>
+                            <div>
+                                <h4>اتاق دوستانه و چت</h4>
+                                <p class="room-owner">میزبان: علی (سطح ۸)</p>
+                            </div>
+                        </div>
+                        <div class="room-meta">
+                            <span class="players-count">👥 ۲/۴</span>
+                            <button class="btn-join" onclick="joinRoom('اتاق دوستانه و چت')">ورود</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- صفحه رده‌بندی هفتگی -->
+            <section id="tab-leaderboard" class="tab-content">
+                <h3 class="section-title">🏆 جدول رده‌بندی هفتگی</h3>
+                <div class="leaderboard-list">
+                    <div class="rank-item gold">
+                        <span class="rank-num">۱</span>
+                        <span class="rank-name">کوروش کبیر</span>
+                        <span class="rank-score">۴,۲۵۰ امتیاز</span>
+                    </div>
+                    <div class="rank-item silver">
+                        <span class="rank-num">۲</span>
+                        <span class="rank-name">مینا</span>
+                        <span class="rank-score">۳,۹۰۰ امتیاز</span>
+                    </div>
+                    <div class="rank-item bronze">
+                        <span class="rank-num">۳</span>
+                        <span class="rank-name">سام (Essi)</span>
+                        <span class="rank-score">۳,۴۲۰ امتیاز</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- صفحه پروفایل -->
+            <section id="tab-profile" class="tab-content">
+                <div class="profile-card">
+                    <div class="avatar-large"></div>
+                    <h2>سام (Essi)</h2>
+                    <p class="profile-meta">سطح ۵ • بازیکن فعال نیورا</p>
+                    <div class="profile-stats">
+                        <div class="stat-box"><span>تعداد بازی</span><strong>۴۸</strong></div>
+                        <div class="stat-box"><span>بردها</span><strong>۳۱</strong></div>
+                        <div class="stat-box"><span>امتیاز کل</span><strong>۳,۴۲۰</strong></div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- نوار ناوبری پایین -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="switchTab('home')">
+                <span class="nav-icon">🎮</span>
+                <span>بازی‌ها</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('leaderboard')">
+                <span class="nav-icon">🏆</span>
+                <span>رده‌بندی</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('profile')">
+                <span class="nav-icon">👤</span>
+                <span>پروفایل</span>
+            </button>
+        </nav>
+
     </div>
+
+    <!-- مودال ساخت اتاق -->
+    <div id="create-room-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>ساخت اتاق اختصاصی</h3>
+            <input type="text" id="new-room-name" placeholder="نام اتاق">
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="closeCreateRoomModal()">انصراف</button>
+                <button class="btn-primary" onclick="createRoom()">تأیید و ساخت</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
