@@ -1,111 +1,57 @@
-/**
- * Nivra Game Hub - Main Logic
- */
+// تغییر تب‌ها
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
 
-function openGame(gameName) {
-    // این قسمت باعث می‌شود وقتی روی منچ کلیک می‌کنید، همان نام درست نمایش داده شود
-    console.log(`[Nivra] Attempting to launch: ${gameName}`);
-    alert(`در حال آماده‌سازی بازی: ${gameName}\nلطفاً منتظر بمانید...`);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("%cFirst Game Nivra 🚀", "color: #00ff00; font-weight: bold; font-size: 16px;");
-    initializeApp();
-});
-
-function initializeApp() {
-    console.log("Initializing system components...");
-}
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #1a1a2e;
-    color: white;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background-color: #16213e;
-    border-bottom: 2px solid #00d2ff;
-    position: relative;
-}
-
-.profile-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-
-#avatar-preview {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #00d2ff;
-}
-
-.logo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: #00d2ff;
-}
-<script>
-    // تابع ورود به اتاق با دریافت نام اتاق و نام بازی
-    function enterRoom(roomName, gameName) {
-        document.getElementById('lobby-view').style.display = 'none';
-        document.getElementById('room-view').style.display = 'flex';
-        
-        // این خط می‌تواند نام بازی را در هدر اتاق نمایش دهد (اختیاری)
-        document.querySelector('.header span').innerText = roomName + " (" + gameName + ")";
+    const targetTab = document.getElementById('tab-' + tabId);
+    if (targetTab) {
+        targetTab.classList.add('active');
     }
 
-    // ... بقیه کدهای قبلی
-</script>
+    // بستن منوی ۳ نقطه در صورت باز بودن
+    document.getElementById('options-dropdown').classList.add('hidden');
 }
 
-function enterRoom(name, game) {
-    document.getElementById('lobby-view').style.display = 'none';
-    document.getElementById('room-view').style.display = 'flex';
-    document.getElementById('room-title').innerText = name + " (" + game + ")";
+// باز کردن لابی یک بازی مشخص
+function openLobby(gameKey, gameTitle) {
+    document.getElementById('current-game-title').innerText = 'اتاق‌های ' + gameTitle;
+    switchTab('lobby');
 }
 
-function exitRoom() {
-    document.getElementById('lobby-view').style.display = 'block';
-    document.getElementById('room-view').style.display = 'none';
+// منوی ۳ نقطه
+function toggleOptionsMenu(event) {
+    event.stopPropagation();
+    const menu = document.getElementById('options-dropdown');
+    menu.classList.toggle('hidden');
 }
 
-function startTalk() {
-    document.getElementById('mic-btn').classList.add('active-mic');
-    console.log("صدا باز شد...");
+// بستن منو با کلیک بیرون از آن
+window.onclick = function() {
+    const menu = document.getElementById('options-dropdown');
+    if (menu && !menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+    }
+};
+
+// کنترل مودال ساخت اتاق
+function openCreateRoomModal() {
+    document.getElementById('create-room-modal').classList.remove('hidden');
 }
 
-function stopTalk() {
-    document.getElementById('mic-btn').classList.remove('active-mic');
-    console.log("صدا قطع شد.");
+function closeCreateRoomModal() {
+    document.getElementById('create-room-modal').classList.add('hidden');
 }
 
 function createRoom() {
-    alert("اتاق جدید ساخته شد!");
-}
-const micBtn = document.getElementById('mic-btn');
-
-// مدیریت رویدادهای لمسی و کلیکی
-function startTalk() {
-    micBtn.classList.add('active-mic');
-    // اینجا در آینده کد مربوط به اتصال به WebSocket/Audio API اضافه می‌شود
+    const name = document.getElementById('new-room-name').value || 'اتاق دوستانه';
+    alert(`اتاق "${name}" ساخته شد. منتظر تایید و آماده‌سازی بازیکنان...`);
+    closeCreateRoomModal();
 }
 
-function stopTalk() {
-    micBtn.classList.remove('active-mic');
+function joinRoom(roomName) {
+    alert(`ورود به "${roomName}" انجام شد.`);
 }
 
-// افزودن Event Listener برای جلوگیری از باگ‌های احتمالی
-micBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startTalk(); });
-micBtn.addEventListener('touchend', stopTalk);
-}
+function openSettings() { alert("بخش تنظیمات صدا و بازی"); }
+function openRules() { alert("قوانین و آموزش بازی‌ها"); }
+function logout() { alert("خروج از حساب انجام شد."); }
