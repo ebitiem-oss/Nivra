@@ -1,71 +1,47 @@
-// ایجاد اتاق‌های نمونه برای تست
-function loadRooms() {
-    const roomsList = document.getElementById('rooms-list');
-    const sampleRooms = [
-        { name: "اتاق دوستانه ۱", players: "۲/۴" },
-        { name: "قهرمانان نیورا", players: "۴/۴" },
-        { name: "بازی سریع", players: "۱/۴" }
-    ];
-
-    roomsList.innerHTML = ''; // پاک کردن لیست قبلی
-
-    sampleRooms.forEach(room => {
-        const roomHTML = `
-            <div class="room-card">
-                <div class="room-info">
-                    <h4>${room.name}</h4>
-                    <p><span class="status-dot"></span> نفرات: ${room.players}</p>
-                </div>
-                <button class="join-btn" onclick="alert('در حال اتصال به ${room.name}...')">ورود</button>
-            </div>
-        `;
-        roomsList.innerHTML += roomHTML;
+// ۱. مدیریت جابجایی بین صفحات (Tabs)
+function switchTab(tabId) {
+    // مخفی کردن همه بخش‌ها
+    const contents = document.querySelectorAll('.tab-content');
+    contents.forEach(content => {
+        content.classList.remove('active');
+        content.style.display = 'none'; // اطمینان از مخفی شدن
     });
-}
 
-// اصلاح تابع switchTab برای لود کردن اتاق‌ها
-const originalSwitchTab = window.switchTab; // ذخیره تابع قبلی
-window.switchTab = function(tabId) {
-    // اجرای تابع اصلی برای تغییر تب‌ها
-    if (typeof originalSwitchTab === 'function') {
-        // این بخش بستگی به کد فعلی تو دارد، اگر تابع switchTab را خودت نوشته‌ای
-        // فقط مطمئن شو که وقتی tabId برابر 'lobby' است، تابع loadRooms() صدا زده شود.
+    // نمایش بخش انتخاب شده
+    const selectedTab = document.getElementById('tab-' + tabId);
+    if (selectedTab) {
+        selectedTab.classList.add('active');
+        selectedTab.style.display = 'block'; // نمایش بخش انتخاب شده
     }
-    
-    // اگر کاربر روی لابی کلیک کرد، اتاق‌ها را بساز
+
+    // اگر رفتیم به لابی، اتاق‌ها را بساز
     if (tabId === 'lobby') {
         loadRooms();
     }
-    
-    // کد اصلی تو برای عوض کردن تب‌ها (فرض می‌کنیم در script.js هست)
-    // من اینجا فقط منطق لود کردن را اضافه کردم.
-};
+}
 
-// نکته: اگر تابع switchTab در فایل تو وجود دارد، 
-// فقط کافیست داخل آن بنویسی: if(tabId === 'lobby') { loadRooms(); }
+// ۲. تابع رفتن از صفحه بازی به لابی
 function goToLobby(gameName) {
-    // ۱. رفتن به تب لابی
-    switchTab('lobby');
-
-    // ۲. عوض کردن تیتر لابی برای اینکه کاربر بداند در لابی کدام بازی است
+    // تغییر تیتر لابی
     const lobbyTitle = document.getElementById('lobby-title');
     if (lobbyTitle) {
         lobbyTitle.innerText = "اتاق‌های " + gameName;
     }
-
-    // ۳. ساختن اتاق‌ها (در مرحله بعد اینجا اتاق‌های واقعی را می‌سازیم)
-    loadRooms(gameName); 
+    
+    // رفتن به تب لابی
+    switchTab('lobby');
 }
 
-// حالا تابع loadRooms را کمی هوشمندتر می‌کنیم (این را جایگزین تابع قبلی loadRooms کن)
+// ۳. تابع ساخت لیست اتاق‌ها
 function loadRooms(gameName) {
     const roomsList = document.getElementById('rooms-list');
     if (!roomsList) return;
 
-    // فعلاً اتاق‌های فرضی برای هر بازی می‌سازیم
+    // ایجاد لیست اتاق‌های فرضی
     const sampleRooms = [
-        { name: "اتاق عمومی " + gameName, players: "۲/۴" },
-        { name: "حرفه‌ای " + gameName, players: "۱/۴" }
+        { name: "اتاق عمومی " + (gameName || "بازی"), players: "۲/۴" },
+        { name: "اتاق حرفه‌ای " + (gameName || "بازی"), players: "۱/۴" },
+        { name: "بازی با دوستان", players: "۰/۴" }
     ];
 
     roomsList.innerHTML = ''; 
@@ -74,8 +50,11 @@ function loadRooms(gameName) {
         const roomHTML = `
             <div class="room-card">
                 <div class="room-info">
-                    <h4>${room.name}</h4>
-                    <p><span class="status-dot"></span> نفرات: ${room.players}</p>
+                    <h4 style="color: white; margin:0;">${room.name}</h4>
+                    <p style="color: #aaa; margin: 5px 0 0; font-size: 0.8rem;">
+                        <span class="status-dot" style="background-color: #4caf50; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px;"></span>
+                        نفرات: ${room.players}
+                    </p>
                 </div>
                 <button class="join-btn" onclick="alert('در حال ورود به ${room.name}...')">ورود</button>
             </div>
@@ -83,4 +62,17 @@ function loadRooms(gameName) {
         roomsList.innerHTML += roomHTML;
     });
 }
+
+// ۴. اجرای اولیه برای نمایش صفحه اصلی هنگام لود شدن سایت
+document.addEventListener('DOMContentLoaded', () => {
+    // نمایش صفحه خانه در ابتدا
+    switchTab('home');
     
+    // فعال کردن آواتار (اگر در HTML کدش را داری)
+    const avatarInput = document.getElementById('avatar-uploader');
+    if(avatarInput) {
+        avatarInput.addEventListener('change', function() {
+            alert('آواتار تغییر کرد!');
+        });
+    }
+});
