@@ -43,3 +43,44 @@ window.switchTab = function(tabId) {
 
 // نکته: اگر تابع switchTab در فایل تو وجود دارد، 
 // فقط کافیست داخل آن بنویسی: if(tabId === 'lobby') { loadRooms(); }
+function goToLobby(gameName) {
+    // ۱. رفتن به تب لابی
+    switchTab('lobby');
+
+    // ۲. عوض کردن تیتر لابی برای اینکه کاربر بداند در لابی کدام بازی است
+    const lobbyTitle = document.getElementById('lobby-title');
+    if (lobbyTitle) {
+        lobbyTitle.innerText = "اتاق‌های " + gameName;
+    }
+
+    // ۳. ساختن اتاق‌ها (در مرحله بعد اینجا اتاق‌های واقعی را می‌سازیم)
+    loadRooms(gameName); 
+}
+
+// حالا تابع loadRooms را کمی هوشمندتر می‌کنیم (این را جایگزین تابع قبلی loadRooms کن)
+function loadRooms(gameName) {
+    const roomsList = document.getElementById('rooms-list');
+    if (!roomsList) return;
+
+    // فعلاً اتاق‌های فرضی برای هر بازی می‌سازیم
+    const sampleRooms = [
+        { name: "اتاق عمومی " + gameName, players: "۲/۴" },
+        { name: "حرفه‌ای " + gameName, players: "۱/۴" }
+    ];
+
+    roomsList.innerHTML = ''; 
+
+    sampleRooms.forEach(room => {
+        const roomHTML = `
+            <div class="room-card">
+                <div class="room-info">
+                    <h4>${room.name}</h4>
+                    <p><span class="status-dot"></span> نفرات: ${room.players}</p>
+                </div>
+                <button class="join-btn" onclick="alert('در حال ورود به ${room.name}...')">ورود</button>
+            </div>
+        `;
+        roomsList.innerHTML += roomHTML;
+    });
+}
+    
