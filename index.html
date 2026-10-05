@@ -30,13 +30,17 @@
             <section id="tab-home" class="tab-content active">
                 <h3 class="section-title">لیست بازی‌ها</h3>
                 <div class="games-list">
-                    <div class="game-item" onclick="alert('ورود به اونو')"> اونو (Uno)</div>
-                    <div class="game-item" onclick="alert('ورود به منچ')"> منچ</div>
-                    <div class="game-item" onclick="alert('ورود به حکم')"> حکم</div>
-                    <div class="game-item" onclick="alert('ورود به شلم')"> شلم</div>
-                    <div class="game-item" onclick="alert('ورود به بیلیارد')"> بیلیارد</div>
-                    <div class="game-item" onclick="alert('ورود به فوتبال')"> فوتبال</div>
-                    <div class="game-item" onclick="alert('ورود به اتللو')"> اتللو</div>
+                <div class="games-list">
+                    <div class="games-list">
+    <!-- برای هر بازی، نام آن را به تابع می‌فرستیم -->
+    <div class="game-item" onclick="goToLobby('اونو')"> اونو (Uno)</div>
+    <div class="game-item" onclick="goToLobby('منچ')"> منچ</div>
+    <div class="game-item" onclick="goToLobby('حکم')"> حکم</div>
+    <div class="game-item" onclick="goToLobby('شلم')"> شلم</div>
+    <div class="game-item" onclick="goToLobby('بیلیارد')"> بیلیارد</div>
+                    </div>
+                    
+    
                 </div>
             </section>
 
