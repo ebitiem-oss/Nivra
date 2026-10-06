@@ -117,3 +117,44 @@ body {
     display: inline-block;
     margin-left: 5px;
 }
+/* استایل کارت بازی که قبلاً دادم را با این ترکیب جایگزین یا اصلاح کن */
+.game-item {
+    display: flex;
+    flex-direction: column; /* آیکون بالا، متن پایین */
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* استایل آیکون بازی */
+.game-icon {
+    font-size: 2.5rem; /* اندازه بزرگ آیکون */
+    margin-bottom: 10px;
+    /* اضافه کردن انیمیشن شناور بودن */
+    animation: float 3s ease-in-out infinite; 
+}
+
+/* استایل متن نام بازی */
+.game-name {
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* انیمیشن متحرک برای آیکون‌ها (حالت شناور بودن) */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); } /* بالا رفتن */
+    100% { transform: translateY(0px); }
+}
+
+/* افکت هنگام کلیک */
+.game-item:active {
+    transform: scale(0.9);
+         }
