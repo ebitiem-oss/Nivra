@@ -1,51 +1,53 @@
-// ۱. لیست کامل بازی‌ها با آیکون و ظرفیت
+// ۱. تنظیمات بازی‌ها
 const gameSettings = {
-    "اونو": { players: [2, 3, 4, 5, 6, 7, 8, 9, 10], icon: "🎴" },
+    "اونو": { players: [2, 3, 4, 5, 6, 7, 8, 9, 10], icon: "🃏" },
     "اتللو": { players: [2], icon: "⚪" },
-    "حکم": { players: [2, 4], icon: "♠️" },
+    "حکم": { players: [2, 4], icon: "🎴" },
     "شلم": { players: [2, 4], icon: "🃏" },
     "فوتبال": { players: [2, 4], icon: "⚽" },
     "بیلیارد": { players: [2, 4], icon: "🎱" },
     "منچ": { players: [2, 3, 4], icon: "🎲" }
 };
 
-// ۲. تابع برای ساختن لیست بازی‌ها در صفحه اصلی
+// ۲. تابع اصلی برای نمایش بازی‌ها در صفحه اول
 function loadGamesList() {
     const gamesListContainer = document.querySelector('.games-list');
     if (!gamesListContainer) return;
 
-    gamesListContainer.innerHTML = '';
+    gamesListContainer.innerHTML = ''; // پاک کردن لیست قبلی
 
     Object.keys(gameSettings).forEach(gameName => {
         const game = gameSettings[gameName];
         const gameDiv = document.createElement('div');
         gameDiv.className = 'game-item';
         
-        // ساخت ساختار هر کارت بازی
         gameDiv.innerHTML = `
             <div class="game-icon">${game.icon}</div>
             <div class="game-name">${gameName}</div>
         `;
         
-        // وقتی روی بازی کلیک شد، منوی انتخاب ظرفیت باز شود
+        // کلیک روی کارت
         gameDiv.onclick = () => openPlayerSelect(gameName);
         gamesListContainer.appendChild(gameDiv);
     });
 }
 
-// ۳. تابع باز کردن منوی انتخاب تعداد نفرات
+// ۳. تابع انتخاب تعداد بازیکن
 function openPlayerSelect(gameName) {
     const game = gameSettings[gameName];
-    let options = game.players.map(p => `<option value="${p}">${p} نفر</option>`).join('');
+    // ساخت لیست گزینه‌ها بر اساس ظرفیت هر بازی
+    const options = game.players.map(p => `<option value="${p}">${p} نفر</option>`).join('');
     
-    // ایجاد یک پنجره ساده برای انتخاب (در مراحل بعد این را زیبا می‌کنیم)
+    // استفاده از prompt ساده برای موبایل (در آینده می‌توانیم منوی شیک بسازیم)
     const selectedPlayers = prompt(
-        `بازی ${gameName} را انتخاب کردید.\nتعداد بازیکنان را انتخاب کنید:\n${game.players.join(', ')}`, 
+        `بازی ${gameName} را انتخاب کردید.\nتعداد بازیکنان را وارد کنید (${game.players.join(', ')}):`, 
         game.players[0]
     );
 
     if (selectedPlayers && game.players.includes(parseInt(selectedPlayers))) {
         goToLobby(gameName, selectedPlayers);
+    } else {
+        alert("تعداد بازیکنان نامعتبر است!");
     }
 }
 
@@ -63,15 +65,14 @@ function loadRooms(gameName, playerCount) {
     const roomsList = document.getElementById('rooms-list');
     if (!roomsList) return;
 
-    const game = gameSettings[gameName];
-    // ساخت یک اتاق فرضی برای تست
+    // برای تست، یک اتاق فرضی می‌سازیم
     roomsList.innerHTML = `
-        <div class="room-card" style="display: flex; align-items: center; justify-content: space-between; padding: 15px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border-radius: 12px;">
+        <div class="room-card" style="display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 12px;">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nivra" style="width: 40px; height: 40px; border-radius: 50%;">
                 <div>
-                    <h4 style="color: white; margin: 0;">اتاق اصلی ${gameName}</h4>
-                    <p style="color: #ff9800; margin: 0; font-size: 0.75rem;">سازنده: @Admin</p>
+                    <h4 style="color: white; margin: 0;">اتاق تست ${gameName}</h4>
+                    <p style="color: #ff9800; margin: 0; font-size: 0.7rem;">سازنده: @Admin</p>
                     <p style="color: #aaa; margin: 2px 0 0; font-size: 0.7rem;">👥 ${playerCount} از ${playerCount} نفر</p>
                 </div>
             </div>
@@ -80,17 +81,17 @@ function loadRooms(gameName, playerCount) {
     `;
 }
 
-// مدیریت تغییر تب‌ها
+// ۶. مدیریت تغییر تب‌ها (صفحه اصلی به لابی و برعکس)
 function switchTab(tabId) {
     const contents = document.querySelectorAll('.tab-content');
     contents.forEach(content => content.style.display = 'none');
+    
     const selectedTab = document.getElementById('tab-' + tabId);
     if (selectedTab) selectedTab.style.display = 'block';
 }
 
-// شروع به کار سایت
+// ۷. اجرای اولیه سایت
 document.addEventListener('DOMContentLoaded', () => {
+    loadGamesList();
     switchTab('home');
-    loadGamesList(); 
 });
-                        
