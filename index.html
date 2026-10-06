@@ -2,75 +2,41 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>نیورا | Nivra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivra | دنیای بازی</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="app">
-        <!-- هدر -->
-        <header class="top-header">
-            <div class="user-profile-widget" onclick="triggerAvatarUpload()">
-                <div class="avatar-ring" id="user-avatar" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22white%22><path d=%22M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z%22/></svg>');"></div>
-                <input type="file" id="avatar-uploader" accept="image/*" style="display:none">
-                <div class="user-details">
-                    <span class="user-name">ابی (Ebi)</span>
-                    <span class="user-level-badge">⭐ سطح ۵</span>
-                </div>
+    <!-- هدر سایت -->
+    <header>
+        <div class="header-content">
+            <div class="logo">NIVRA</div>
+            <div class="menu-icon">⋮</div>
+        </div>
+    </header>
+
+    <!-- بخش اصلی محتوا -->
+    <main id="main-container">
+        
+        <!-- صفحه اصلی (لیست بازی‌ها) -->
+        <section id="tab-home" class="tab-content">
+            <h2 class="section-title">انتخاب بازی</h2>
+            <div class="games-list">
+                <!-- بازی‌ها توسط JavaScript اینجا ساخته می‌شوند -->
             </div>
-            <div class="header-actions">
-                <button class="icon-menu-btn">⋮</button>
+        </section>
+
+        <!-- صفحه لابی -->
+        <section id="tab-lobby" class="tab-content" style="display: none;">
+            <h2 id="lobby-title" class="section-title">لابی</h2>
+            <div id="rooms-list">
+                <!-- اتاق‌ها اینجا نمایش داده می‌شوند -->
             </div>
-        </header>
+        </section>
 
-        <!-- محتوای صفحات -->
-        <main class="viewport">
-            <!-- صفحه بازی‌ها -->
-            <section id="tab-home" class="tab-content active">
-                <h3 class="section-title">لیست بازی‌ها</h3>
-                <div class="games-list">
-                </div> 
-                    
-            </section>
-
-            <!-- صفحه رده‌بندی -->
-            <section id="tab-leaderboard" class="tab-content">
-                <h3 class="section-title">🏆 جدول رده‌بندی</h3>
-                <div class="leaderboard-list" id="leaderboard-container"></div>
-            </section>
-
-            <!-- صفحه پروفایل -->
-            <section id="tab-profile" class="tab-content">
-                <h3 class="section-title">👤 تنظیمات پروفایل</h3>
-                <div class="profile-settings">
-                          <button class="nav-item" onclick="switchTab('lobby')">🏠 لابی</button>
-                    
-                    <p>در حال توسعه...</p>
-                </div>
-             </section>
-                <!-- صفحه لابی اتاق‌ها -->
-            <section id="tab-lobby" class="tab-content">
-                <div class="lobby-header">
-                    <button class="back-btn" onclick="switchTab('home')">← بازگشت</button>
-                    <h3 class="section-title" id="lobby-title">اتاق‌های بازی</h3>
-                </div>
-                
-                <div class="rooms-container" id="rooms-list">
-                    <!-- اتاق‌ها اینجا ساخته می‌شوند -->
-                </div>
-            </section>
-        </main>
-
-        <!-- منوی ناوبری پایین -->
-        <nav class="bottom-nav">
-            <button class="nav-item active" onclick="switchTab('home')">🎮 بازی‌ها</button>
-            <button class="nav-item" onclick="switchTab('leaderboard')">🏆 رده‌بندی</button>
-            <button class="nav-item" onclick="switchTab('profile')">👤 پروفایل</button>
-        </nav>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
 </html>
-
