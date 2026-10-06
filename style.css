@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: #0f0f0f; /* پس‌زمینه تیره عمیق */
+    background-color: #0f0f0f;
     color: white;
     min-height: 100vh;
 }
@@ -17,6 +17,7 @@ header {
     padding: 20px;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -33,20 +34,7 @@ header {
     color: #ff9800;
 }
 
-.menu-icon {
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-/* بخش محتوا */
-.section-title {
-    text-align: center;
-    margin: 25px 0;
-    font-size: 1.4rem;
-    color: #eee;
-}
-
-/* شبکه بازی‌ها (Grid) - مشابه ویدیو */
+/* شبکه بازی‌ها - دقیقاً مثل ویدیو دو ستونه */
 .games-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* دو ستون در موبایل */
@@ -54,7 +42,7 @@ header {
     padding: 15px;
 }
 
-/* کارت هر بازی */
+/* استایل کارت بازی (بدون انیمیشن شناور) */
 .game-item {
     display: flex;
     flex-direction: column;
@@ -64,24 +52,24 @@ header {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 24px; /* لبه‌های بسیار گرد */
+    border-radius: 24px; /* گرد بودن لبه‌ها مثل ویدیو */
     padding: 25px 15px;
     text-align: center;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-    transition: transform 0.2s ease;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: transform 0.2s ease; /* فقط برای افکت کلیک */
 }
 
+/* افکت هنگام لمس کردن کارت در موبایل */
 .game-item:active {
     transform: scale(0.94);
     background: rgba(255, 152, 0, 0.2);
 }
 
-/* آیکون بزرگ و متحرک */
+/* آیکون ثابت و بزرگ */
 .game-icon {
     font-size: 3.5rem;
     margin-bottom: 12px;
     filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-    animation: float 3s ease-in-out infinite;
 }
 
 .game-name {
@@ -90,14 +78,14 @@ header {
     font-weight: 600;
 }
 
-/* انیمیشن شناور بودن */
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-12px); }
-    100% { transform: translateY(0px); }
+/* بخش لابی و عنوان‌ها */
+.section-title {
+    text-align: center;
+    margin: 25px 0;
+    font-size: 1.4rem;
+    color: #eee;
 }
 
-/* استایل لابی و اتاق‌ها */
 .room-card {
     margin: 10px 15px;
     background: rgba(255, 255, 255, 0.05);
@@ -113,3 +101,4 @@ header {
     border-radius: 10px;
     font-weight: bold;
 }
+
